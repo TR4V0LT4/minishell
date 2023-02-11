@@ -15,8 +15,8 @@
 t_parser	*init_content(t_parser *content)
 {
 	content = (t_parser *)malloc(sizeof(t_parser));
-	//content->in_fd = NULL;
-	//content->out_fd = NULL;
+	content->in_file = 0;
+	content->out_file = 1;
 	content->cmd = (char **)malloc(sizeof(char *) * 2);
 	content->cmd[0] = NULL;
 	content->cmd[1] = NULL;
@@ -88,21 +88,21 @@ t_list	*fill_command(t_list *tokens)
 			tokens = tokens->next;
 			curr = (t_token *) tokens->content;
 			if (curr->type == TOKEN_STRING)
-				tmp->out_fd = ft_strdup(curr->value);
+				tmp->out_file = open(curr->value, O_CREAT | O_RDWR | O_APPEND, 0664);
 		}
 		else if (curr->type == TOKEN_REDIRECT)
 		{
 			tokens = tokens->next;
 			curr = (t_token *) tokens->content;
 			if (curr->type == TOKEN_STRING)
-				tmp->out_fd = ft_strdup(curr->value);
+				tmp->out_file = open(curr->value, O_TRUNC | O_CREAT | O_RDWR, 0664);
 		}
 		else if (curr->type == TOKEN_LREDIRECT)
 		{
 			tokens = tokens->next;
 			curr = (t_token *) tokens->content;
 			if (curr->type == TOKEN_STRING)
-				tmp->in_fd = ft_strdup(curr->value);
+				tmp->in_file = open(curr->value, O_CREAT | O_RDWR, 0664);
 		}
 		else if (curr->type == TOKEN_PIPE)
 		{

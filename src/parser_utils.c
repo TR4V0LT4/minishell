@@ -94,7 +94,7 @@ void print_cmd(t_list *list)
                     printf("cmd [%d] = %s\n",i,curr->cmd[i]);
                     i++;
                 }
-             printf("in_file =  %s && out_file = %s\n", curr->in_fd,curr->out_fd);
+             printf("in_file =  %d && out_file = %d\n", curr->in_file,curr->out_file);
             list = list->next;
         }
 }

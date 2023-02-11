@@ -25,8 +25,9 @@ typedef struct s_lexer
 typedef struct s_parser
 {
   char    **cmd;
-  char     *in_fd;
-  char     *out_fd;
+  int     in_file;
+  int     out_file;
+  
 }             t_parser;
 
 typedef struct s_token
@@ -70,7 +71,7 @@ int check_syntax(t_list *tokens);
 void init_parser(t_parser *cmd);
 t_list *fill_command(t_list *tokens);
 
-        //utils//
+        //parser_utils.c//
 void deallocate(t_list *list);
 void	ft_free(char	**t);
 void	free_path_arr(char	**path);
@@ -78,6 +79,9 @@ char	**realloc_cmd(char **cmd, char *str);
 void debug_print_token(t_token *token);
 void print_tokens(t_list *list);
 void print_cmd(t_list *list);
+
+
+       //execution_utils.c//
 t_list *get_env(char **env);
 char *add_path(char *cmd);
 size_t get_env_size(char **env);
@@ -93,9 +97,6 @@ void  export(char *var , t_list *env);
       //execut//
 int start(t_list *list, t_list *envi);
 void	execute(t_list *cmds , char **env);
-
-
-
 
 
 #endif
