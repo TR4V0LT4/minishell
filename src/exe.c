@@ -21,21 +21,14 @@ void	execute(t_list *cmds , char **env)
 		{
 			if(cmds->next)
 			{
-				//close(fd[0]);
-				//	
-				//printf("duping %s\n", tmp->cmd[0]);
-				dup2(fd[1], 1);
+				printf("cmd  %s\n",tmp->cmd[0]);
 				close(fd[0]);
+				dup2(fd[1], 1);
 				close(fd[1]);
-			
-				//dup(STDOUT_FILENO);
-				//dup2(fd[1],fd[0]);
-				//dup2(fd[0],STDIN_FILENO);
-				close(0);
-				//close(STDOUT_FILENO);
 			}
-			else
+				close(fd[1]);
 				dup2(fd[0], 0);
+				close(fd[0]);
 			if(tmp->in_file != 0)
 			{
 				printf("im here\n");
@@ -54,6 +47,7 @@ void	execute(t_list *cmds , char **env)
 			if (execve(tmp->cmd[0], tmp->cmd, env) == -1)
 				exit(1);
 		}
+		flag = 1;
 		cmds = cmds->next;	
 		i++;
 	}
