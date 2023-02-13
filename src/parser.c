@@ -120,11 +120,10 @@ char	*string_parser(char *str)
 {
 	int		i;
 	char	*string;
-	char 	*var;
 
 	i = 0;
 	string = NULL;
-	var = NULL;
+
 
 	// "" error
 	while (str[i])

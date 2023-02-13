@@ -98,13 +98,9 @@ static	void	ft_my_alloc(char **t, char const *s, int wn, char c)
 
 char	**ft_split(char const *s, char c)
 {
-	int		i;
-	int		j;
 	int		wn;
 	char	**t;
 
-	i = 0;
-	j = 0;
 	if (!s)
 		return (0);
 	wn = count_words(s, c);

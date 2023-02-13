@@ -19,26 +19,36 @@ void	execute(t_list *cmds , char **env)
 		pid = fork();
 		if (pid == 0)
 		{
-			if(cmds->next)
+			if(cmds->next && i == 0)
 			{
-				printf("cmd  %s\n",tmp->cmd[0]);
 				close(fd[0]);
 				dup2(fd[1], 1);
 				close(fd[1]);
 			}
+			if(cmds->next && i != 0)
+			{
+				//fd[0] = -1;
+				dup2(fd[0], 0);
+				close(fd[0]);
+				//fd[0] = -1;
+				dup2(fd[1], 1);
+				close(fd[1]);
+				close (1);
+			}
+			else
+			{
 				close(fd[1]);
 				dup2(fd[0], 0);
 				close(fd[0]);
+			}	
 			if(tmp->in_file != 0)
 			{
-				printf("im here\n");
 				close(0);
 				dup2(tmp->in_file, STDIN_FILENO);
 				close(tmp->in_file);
 			}
 			if(tmp->out_file != 1)
 			{
-				printf("im here\n");
 				close (1);
 				dup2(tmp->out_file, STDOUT_FILENO);
 				close(tmp->out_file);
@@ -47,7 +57,8 @@ void	execute(t_list *cmds , char **env)
 			if (execve(tmp->cmd[0], tmp->cmd, env) == -1)
 				exit(1);
 		}
-		flag = 1;
+		//fd[0] = -1;
+		//fd[1] = -1;
 		cmds = cmds->next;	
 		i++;
 	}
