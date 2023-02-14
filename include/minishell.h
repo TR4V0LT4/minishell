@@ -93,6 +93,8 @@ int   builtins(t_list *list, t_list *envi);
 void  unset(char *var, t_list *envi);
 void	env(t_list* senv);
 void  export(char *var , t_list *env);
+void	pwd(void);
+void	echo(char **s);
 
       //execut//
 int start(t_list *list, t_list *envi);
