@@ -19,13 +19,15 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		add_history(str);
 		tokens = lexer(str);
+
 		if (check_syntax(tokens))
 		{
 			deallocate(tokens);
 			continue ;
 		}
 		cmd = fill_command(tokens);
-	//	print_tokens(tokens);
+		print_tokens(tokens);
+		print_cmd(cmd);
 		start(cmd, t_env);
 		deallocate(tokens);
 	}

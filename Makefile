@@ -16,7 +16,7 @@ SRC = src/main.c src/lexer.c src/token.c src/parser.c  src/parser_utils.c src/ex
 
 OBJ = ${SRC:%.c=%.o}
 
-FLAGS =  -Wall -Wextra -Werror  #-fsanitize=address
+FLAGS =  -Wall -Wextra -Werror  -fsanitize=address
 
 READLINE = -lreadline
 
