@@ -26,8 +26,7 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		}
 		cmd = fill_command(tokens);
-		print_tokens(tokens);
-		print_cmd(cmd);
+		//  
 		start(cmd, t_env);
 		deallocate(tokens);
 	}

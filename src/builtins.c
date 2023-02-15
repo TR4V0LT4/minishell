@@ -6,7 +6,8 @@ int builtins(t_list *list, t_list *envi)
 	t_parser *d = (t_parser *)list->content;
 	
 
-	if(!ft_strncmp(d->cmd[0],"echo",4)) 
+	// segv in strncmp
+	if(!ft_strncmp(d->cmd[0],"echo", 5)) 
 		echo(d->cmd);
 	// else if(!ft_strncmp(d->cmd[0],"cd",3)) 
 	// 	cd(envi);

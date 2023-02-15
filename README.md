@@ -21,3 +21,9 @@ minishell: syntax error unexpected token `\n'
 ➜ minishell echo ' "$PWD" '
 minishell: syntax error unexpected token `\n'
 ➜ minishell echo ' ›"$PWD" '
+
+
+=> expand inside heredoc
+=> signlas
+=> exit status
+=> multiple pipes
