@@ -4,23 +4,21 @@
 int builtins(t_list *list, t_list *envi)
 {
 	t_parser *d = (t_parser *)list->content;
-	
 
-	// segv in strncmp
-	if(!ft_strncmp(d->cmd[0],"echo", 5)) 
+	if(!ft_strncmp(d->cmd[0],"echo",5)) 
 		echo(d->cmd);
 	// else if(!ft_strncmp(d->cmd[0],"cd",3)) 
 	// 	cd(envi);
 	else if(!ft_strncmp(d->cmd[0],"pwd",4))
 		pwd();
 	else if(!ft_strncmp(d->cmd[0],"export",7))
-		export(d->cmd[1],envi);
+		ft_export(d->cmd[1],envi);
 	else if(!ft_strncmp(d->cmd[0],"unset",6))
 		unset(d->cmd[1] ,envi);
 	else if(!ft_strncmp(d->cmd[0],"env",4))
 		env(envi);
-	// else if(!ft_strncmp(d->cmd[0],"exit",5)) 
-	// 	exit(d->cmd);
+	else if(!ft_strncmp(d->cmd[0],"exit", 5))
+		ft_exit(d->cmd);
 	else 
 		return 1;
 	return 0;
@@ -65,7 +63,7 @@ void	env(t_list* senv)
 	}
 }
 
-void	export(char *var , t_list *env)
+void	ft_export(char *var , t_list *env)
 {	
 	char **all;
 	t_env * temp_var;
@@ -83,29 +81,113 @@ void	pwd(void)
 		printf("%s\n", s);
 }
 
+int	remove_line(char *s)
+{
+	int	i;
+
+	i = 0;
+	if (s[i] == '-')
+		i++;
+	else
+		return (0);
+	while (s[i])
+	{
+		if (s[i] == 'n')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 void	echo(char **s)
 {
 	int	i;
 	int	remove_new_line;
-	int	p;
 
 	i = 1;
 	remove_new_line = 0;
-	p = 1;
 	while (s[i])
 	{
-		if (p == 1 && s[1][1] == '-' && s[1][2] != '\0')
+		if (remove_line(s[1]))
 		{
 			remove_new_line = 1;
 			i++;
 		}
-		p = 0;
 		printf("%s", s[i]);
 		if (s[i + 1] != NULL)
 			printf(" ");
 		i++;
 	}
-	//printf(">> %d\n", remove_new_line);
 	if (!remove_new_line)
 		printf("\n");
+}
+
+int	size_par(char **s)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (s[i])
+	{
+		j = 0;
+		while (s[i][j] != '\0')
+			j++;
+		i++;
+	}
+	return (i);
+}
+
+int	par_number(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (!ft_isdigit(s[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+void	not_number()
+{
+	write(1, "numeric argument required\n", 27);
+	exit(255);
+}
+
+void	one_parameter(char *s)
+{
+	int p;
+
+	if (!par_number(s))
+		not_number();
+	else
+	{
+		p = ft_atoi(s);
+		write(1, "exit\n", 6);
+		exit (p % 256);
+	}
+}
+
+void	ft_exit(char **s)
+{
+	int	size;
+
+	size = size_par(s);
+	if (size == 1)
+	{
+		write(1, "exit\n", 6);
+		exit(0);
+	}
+	else if (size == 2)
+		one_parameter(s[1]);
+	else
+	{
+		if (!par_number(s[1]))
+			not_number();
+		write(1, "too many arguments\n", 20);
+	}
 }
