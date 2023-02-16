@@ -7,12 +7,12 @@ int builtins(t_list *list, t_list *envi)
 
 	if(!ft_strncmp(d->cmd[0],"echo",5)) 
 		echo(d->cmd);
-	// else if(!ft_strncmp(d->cmd[0],"cd",3)) 
-	// 	cd(envi);
+	else if(!ft_strncmp(d->cmd[0],"cd",3)) 
+		ft_cd(envi);
 	else if(!ft_strncmp(d->cmd[0],"pwd",4))
 		pwd();
 	else if(!ft_strncmp(d->cmd[0],"export",7))
-		ft_export(d->cmd[1],envi);
+		ft_export(d->cmd[0],envi);
 	else if(!ft_strncmp(d->cmd[0],"unset",6))
 		unset(d->cmd[1] ,envi);
 	else if(!ft_strncmp(d->cmd[0],"env",4))
@@ -190,4 +190,43 @@ void	ft_exit(char **s)
 			not_number();
 		write(1, "too many arguments\n", 20);
 	}
+}
+
+char	*get_env_home(char **s)
+{
+	int i = 0;
+	char *home;
+
+	home = NULL;
+	while (s[i])
+	{
+		if (ft_strncmp(s[i], "HOME", ft_strlen("HOME")) == 0)
+			home = ft_substr(s[i], 0, 4);
+		i++;
+	}
+	return(home);
+}
+
+void	g_home(char **s)
+{
+	char	*s;
+	char	*home;
+
+	home = get_env_home(s);
+	printf(">> %s\n", home);
+}
+
+void	ft_cd(char **s, t_list *env)
+{
+	int	i = 0;
+	char **s;
+
+	s = get_env(env);
+	i = size_par(s);
+	if (i == 1)
+		g_home(s);
+	// else
+	// {
+
+	// }
 }
