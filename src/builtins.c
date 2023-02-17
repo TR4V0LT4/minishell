@@ -94,7 +94,10 @@ void	ft_export(char **var, t_list *env)
 		all = ft_split(var[1], '=');
 		temp_var->key = all[0];
 		temp_var->value = all[1];
-		ft_lstadd_back(&export, ft_lstnew(temp_var));
+		if (!(temp_var->key[0] >= 'A' && temp_var->key[0] <= 'Z') || !(temp_var->key[0] >= 'a' && temp_var->key[0] <= 'z') || temp_var->key[0] != '_')
+			printf("not a valid identifier\n");
+		else
+			ft_lstadd_back(&export, ft_lstnew(temp_var));
 	}
 }
 
@@ -210,49 +213,51 @@ void	ft_exit(char **s)
 	}
 }
 
-// char	*get_env_home(char **s)
-// {
-// 	int i = 0;
-// 	char *home;
-
-// 	home = NULL;
-// 	while (s[i])
-// 	{
-// 		if (ft_strncmp(s[i], "HOME", ft_strlen("HOME")) == 0)
-// 			home = ft_substr(s[i], 0, 4);
-// 		i++;
-// 	}
-// 	return(home);
-// }
-
-void	change_env(t_list *l, char *home)
+void	change_pwd(t_list *l, char *home)
 {
-	t_list *s = l;
+	t_list *s;
 	t_env	*a;
 
+	s = l;
 	while (s)
 	{
 		a = (t_env *) s->content;
-		if (!ft_strncmp(a->key, "PWD", 3) || !ft_strncmp(a->key, "OLDPWD", 6))
+		if (!ft_strncmp(a->key, "PWD", 3))
 			a->value = home;
+		s = s->next;
+	}
+}
+
+void	change_old(t_list *l, char *old)
+{
+	t_list	*s;
+	t_env	*a;
+
+	s = l;
+	while (s)
+	{
+		a = (t_env *) s->content;
+		if (!ft_strncmp(a->key, "OLDPWD", 6))
+			a->value = old;
 		s = s->next;
 	}
 }
 
 void	g_home(t_list *env)
 {
-	//char	*s;
 	char	*home;
-	//int		i = 0;
-	t_list *a = env;
+	char	*old;
+	t_list	*a;
 	t_env	*l;
-	//int		j = 0;
 
+	a = env;
 	while (a)
 	{
 		l = (t_env *) a->content;
 		if (!ft_strncmp(l->key, "HOME", 4))
 		{
+			old = getcwd(NULL, 0);
+			change_old(env, old);
 			if (chdir(l->value) == -1)
 			{
 				printf("ERREUR");
@@ -264,50 +269,26 @@ void	g_home(t_list *env)
 			}
 		}
 		a = a->next;
-		//i++;
 	}
-	change_env(env, home);
+	change_pwd(env, home);
 }
 
 void	ft_cd(char **s, t_list *env)
 {
-	// int f = 0;
-	int	i = 0;
+	int		i;
 	char	*p;
-	// char **senv;
-	// char **key;
-	// t_list *a = env;
-	// t_env	*l;
-	//int j = 0;
+	char	*old;
 
-	// key = malloc(4 * sizeof(char *));
-	// senv = malloc(4 * sizeof(char *));
-	// while (a)
-	// {
-	// 	l = (t_env *) a->content;
-	// 	if (!ft_strncmp(l->key, "HOME", 4) || !ft_strncmp(l->key, "PWD", 3) || !ft_strncmp(l->key, "OLDPWD", 6))
-	// 	{
-	// 		key[f] = ft_strdup(l->key);
-	// 		senv[j] = ft_strdup(l->value);
-	// 		j++;
-	// 		f++;
-	// 	}
-	// 	a = a->next;
-	// }
-	// senv[j] = NULL;
-	// key[f] = NULL;
 	i = size_par(s);
 	if (i == 1)
 		g_home(env);
 	else
 	{
+		old = getcwd(NULL, 0);
+		change_old(env, old);
 		if (chdir(s[1]) == -1)
 			printf("No such file or directory\n");
 		p = getcwd(NULL, 0);
-		change_env(env, p);
-		// else
-		// {
-		// 	printf("ok\n");
-		// }
+		change_pwd(env, p);
 	}
 }

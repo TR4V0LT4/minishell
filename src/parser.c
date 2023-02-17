@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wlahyani <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 22:10:00 by wlahyani          #+#    #+#             */
-/*   Updated: 2023/02/02 22:33:13 by wlahyani         ###   ########.fr       */
+/*   Updated: 2023/02/17 15:17:00 by skhaliff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ char *expand(char *result, char *var_name)
 	char *value;
 	char *tmp;
 
-	value  = getenv(var_name);
+	value = getenv(var_name);
 	tmp = result;
 	result = ft_strjoin(result, value);
 	if (result == NULL)

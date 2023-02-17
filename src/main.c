@@ -19,7 +19,6 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		add_history(str);
 		tokens = lexer(str);
-
 		if (check_syntax(tokens))
 		{
 			deallocate(tokens);
