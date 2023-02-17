@@ -6,7 +6,7 @@
 #    By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/26 20:23:30 by wlahyani          #+#    #+#              #
-#    Updated: 2023/02/15 23:41:21 by skhaliff         ###   ########.fr        #
+#    Updated: 2023/02/17 08:59:11 by skhaliff         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRC = src/main.c src/lexer.c src/token.c src/parser.c  src/parser_utils.c src/ex
 
 OBJ = ${SRC:%.c=%.o}
 
-FLAGS =  -Wall -Wextra -Werror  -fsanitize=address
+FLAGS =  -Wall -Wextra -Werror -fsanitize=address
 
 READLINE = -lreadline
 

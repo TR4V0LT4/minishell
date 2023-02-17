@@ -6,7 +6,7 @@ t_list *get_env(char **env)
 	char **all;
 	t_env * temp_var;
 	t_list  *env_list;
-	
+
 	i = 0;
 	env_list  =  NULL;
 	while (env[i] != NULL)
@@ -14,7 +14,7 @@ t_list *get_env(char **env)
 		temp_var = malloc(sizeof(t_env));
 		all = ft_split(env[i], '=');
 		temp_var->key = all[0];
-		temp_var->value= all[1];
+		temp_var->value = all[1];
 		ft_lstadd_back(&env_list, ft_lstnew(temp_var));
 		free(all);
 		i++;

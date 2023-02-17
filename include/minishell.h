@@ -90,12 +90,14 @@ char **env_to_tab(t_list *list);
 
       //builtins//
 int   builtins(t_list *list, t_list *envi);
-void  unset(char *var, t_list *envi);
+void unset(char **var, t_list *envi);
 void	env(t_list* senv);
-void  ft_export(char *var , t_list *env);
+void	ft_export(char **var, t_list *env);
 void	pwd(void);
 void	echo(char **s);
 void	ft_exit(char **s);
+void	ft_cd(char **s, t_list *env);
+int	size_par(char **s);
 
       //execut//
 int start(t_list *list, t_list *envi);

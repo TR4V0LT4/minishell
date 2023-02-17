@@ -49,7 +49,10 @@ void	execute(t_list *cmds , char **env)
 			}
 			tmp->cmd[0] = add_path(tmp->cmd[0]);
 			if (execve(tmp->cmd[0], tmp->cmd, env) == -1)
+			{
+				printf("commande not found\n");
 				exit(1);
+			}
 		}
 		if (buffer[0] != -1)
 			close(buffer[0]);
