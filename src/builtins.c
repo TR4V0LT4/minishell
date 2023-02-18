@@ -1,68 +1,89 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/18 15:05:46 by skhaliff          #+#    #+#             */
+/*   Updated: 2023/02/18 18:24:32 by skhaliff         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int builtins(t_list *list, t_list *envi)
+int	builtins(t_list *list)
 {
-	t_parser *d = (t_parser *)list->content;
+	t_parser	*d;
 
-	if(!ft_strncmp(d->cmd[0],"echo", 5))
+	d = (t_parser *)list->content;
+	if (!ft_strncmp(d->cmd[0], "echo", 5))
 		echo(d->cmd);
-	else if(!ft_strncmp(d->cmd[0],"cd", 3)) 
-		ft_cd(d->cmd, envi);
-	else if(!ft_strncmp(d->cmd[0],"pwd", 4))
+	else if (!ft_strncmp(d->cmd[0], "cd", 3))
+		ft_cd(d->cmd);
+	else if (!ft_strncmp(d->cmd[0], "pwd", 4))
 		pwd();
-	else if(!ft_strncmp(d->cmd[0],"export", 7))
-		ft_export(d->cmd, envi);
-	else if(!ft_strncmp(d->cmd[0],"unset", 6))
-		unset(d->cmd, envi);
-	else if(!ft_strncmp(d->cmd[0],"env", 4))
-		env(envi);
-	else if(!ft_strncmp(d->cmd[0],"exit", 5))
+	else if (!ft_strncmp(d->cmd[0], "export", 7))
+		ft_export(d->cmd);
+	else if (!ft_strncmp(d->cmd[0], "unset", 6))
+		unset(d->cmd);
+	else if (!ft_strncmp(d->cmd[0], "env", 4))
+		env();
+	else if (!ft_strncmp(d->cmd[0], "exit", 5))
 		ft_exit(d->cmd);
-	else 
-		return 1;
-	return 0;
+	else
+		return (1);
+	return (0);
 }
 
-void unset(char **var, t_list *envi)
+int	size_par(char **s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
+
+void unset(char **var)
 {
 	int	i = 0;
-	//(void)var;
 	t_env * temp_var;
 	t_list *previous;
 
 	temp_var = malloc(sizeof(t_env));
-	i  = size_par(var);
+	i = size_par(var);
 	if (i == 1)
 		return ;
-	else if ( i == 2)
+	else if (i == 2)
 	{
-	if (envi->content == NULL)
+	if (g_data.env->content == NULL)
 		return ;
-	while (envi)
+	while (g_data.env)
 	{	
-		temp_var = (t_env *) envi->content;
+		temp_var = (t_env *) g_data.env->content;
 		if (!ft_strncmp(temp_var->key, var[1], ft_strlen(var[1])))
 		{
-			if (envi->next)
-				previous->next = envi->next;
+			if (g_data.env->next)
+				previous->next = g_data.env->next;
 			else
 				previous->next = NULL;
-			free(envi);
+			free(g_data.env);
 			return ;
 		}
-		previous = envi;
-		envi = envi->next;
+		previous = g_data.env;
+		g_data.env = g_data.env->next;
 	}
 	}
 }
 
-void	env(t_list *senv)
+void	env(void)
 {
-	t_list *curr;
-	t_env *curr_value;
+	t_list	*curr;
+	t_env	*curr_value;
 
-	curr = senv;
+	curr = g_data.env;
 	while (curr)
 	{
 		curr_value = (t_env *)(curr->content);
@@ -71,39 +92,45 @@ void	env(t_list *senv)
 	}
 }
 
-void	ft_export(char **var, t_list *env)
+void	print_export(t_list *export, t_env *temp_var)
 {
-	int	i = 0;
+	while (export)
+	{
+		temp_var = (t_env *)(export->content);
+		printf("%s=%s\n", temp_var->key, temp_var->value);
+		export = export->next;
+	}
+}
+
+void	ft_export(char **var)
+{
+	int		i;
 	char	**all;
 	t_env	*temp_var;
-	t_list	*export = env;
+	t_list	*export;
 
+	export = g_data.env;
 	temp_var = malloc(sizeof(t_env));
 	i = size_par(var);
 	if (i == 1)
-	{
-		while (export)
-		{
-			temp_var = (t_env *)(export->content);
-			printf("%s=%s\n", temp_var->key, temp_var->value);
-			export = export->next;
-		}
-	}
+		print_export(export, temp_var);
 	else
 	{
 		all = ft_split(var[1], '=');
 		temp_var->key = all[0];
 		temp_var->value = all[1];
-		if (!(temp_var->key[0] >= 'A' && temp_var->key[0] <= 'Z') || !(temp_var->key[0] >= 'a' && temp_var->key[0] <= 'z') || temp_var->key[0] != '_')
+		if (!ft_isalpha(temp_var->key[0]) && temp_var->key[0] != '_')
 			printf("not a valid identifier\n");
 		else
 			ft_lstadd_back(&export, ft_lstnew(temp_var));
+		//free(temp_var);
 	}
 }
 
 void	pwd(void)
 {
-	char s[PATH_MAX];
+	char	s[PATH_MAX];
+
 	if (getcwd(s, sizeof(s)) != NULL)
 		printf("%s\n", s);
 }
@@ -149,146 +176,20 @@ void	echo(char **s)
 		printf("\n");
 }
 
-int	size_par(char **s)
+char	*get_new_env(char *s)
 {
-	int	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
-
-int	par_number(char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-	{
-		if (!ft_isdigit(s[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-void	not_number()
-{
-	write(1, "numeric argument required\n", 27);
-	exit(255);
-}
-
-void	one_parameter(char *s)
-{
-	int p;
-
-	if (!par_number(s))
-		not_number();
-	else
-	{
-		p = ft_atoi(s);
-		write(1, "exit\n", 6);
-		exit (p % 256);
-	}
-}
-
-void	ft_exit(char **s)
-{
-	int	size;
-
-	size = size_par(s);
-	if (size == 1)
-	{
-		write(1, "exit\n", 6);
-		exit(0);
-	}
-	else if (size == 2)
-		one_parameter(s[1]);
-	else
-	{
-		if (!par_number(s[1]))
-			not_number();
-		write(1, "too many arguments\n", 20);
-	}
-}
-
-void	change_pwd(t_list *l, char *home)
-{
-	t_list *s;
 	t_env	*a;
-
-	s = l;
-	while (s)
-	{
-		a = (t_env *) s->content;
-		if (!ft_strncmp(a->key, "PWD", 3))
-			a->value = home;
-		s = s->next;
-	}
-}
-
-void	change_old(t_list *l, char *old)
-{
-	t_list	*s;
-	t_env	*a;
-
-	s = l;
-	while (s)
-	{
-		a = (t_env *) s->content;
-		if (!ft_strncmp(a->key, "OLDPWD", 6))
-			a->value = old;
-		s = s->next;
-	}
-}
-
-void	g_home(t_list *env)
-{
-	char	*home;
-	char	*old;
-	t_list	*a;
-	t_env	*l;
-
-	a = env;
-	while (a)
-	{
-		l = (t_env *) a->content;
-		if (!ft_strncmp(l->key, "HOME", 4))
-		{
-			old = getcwd(NULL, 0);
-			change_old(env, old);
-			if (chdir(l->value) == -1)
-			{
-				printf("ERREUR");
-				exit (1);
-			}
-			else
-			{
-				home = getcwd(NULL, 0);
-			}
-		}
-		a = a->next;
-	}
-	change_pwd(env, home);
-}
-
-void	ft_cd(char **s, t_list *env)
-{
+	t_list	*l;
 	int		i;
-	char	*p;
-	char	*old;
 
-	i = size_par(s);
-	if (i == 1)
-		g_home(env);
-	else
+	i = ft_strlen(s);
+	l = g_data.env;
+	while (l)
 	{
-		old = getcwd(NULL, 0);
-		change_old(env, old);
-		if (chdir(s[1]) == -1)
-			printf("No such file or directory\n");
-		p = getcwd(NULL, 0);
-		change_pwd(env, p);
+		a = (t_env *) l->content;
+		if (ft_strncmp(s, a->key, i) == 0)
+			return (a->value);
+		l = l->next;
 	}
+	return (0);
 }

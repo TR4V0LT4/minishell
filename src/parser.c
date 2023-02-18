@@ -6,7 +6,7 @@
 /*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 22:10:00 by wlahyani          #+#    #+#             */
-/*   Updated: 2023/02/17 15:17:00 by skhaliff         ###   ########.fr       */
+/*   Updated: 2023/02/18 19:28:26 by skhaliff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ t_list	*fill_command(t_list *tokens)
 	return (cmd_list);
 }
 
-char *get_var_name(char *str)
+char	*get_var_name(char *str)
 {
 	int i = 1; // dollar $ 
 	char *name;
@@ -132,12 +132,12 @@ char *get_var_name(char *str)
 	return (name);
 }
 
-char *expand(char *result, char *var_name)
+char	*expand(char *result, char *var_name)
 {
-	char *value;
-	char *tmp;
+	char	*value;
+	char	*tmp;
 
-	value = getenv(var_name);
+	value = get_new_env(var_name);
 	tmp = result;
 	result = ft_strjoin(result, value);
 	if (result == NULL)
@@ -152,7 +152,7 @@ char *expand(char *result, char *var_name)
 char	*string_parser(char *str)
 {
 	int		i;
-	char *string;
+	char	*string;
 	i = 0;
 	string = NULL;
 	char *var_name;
@@ -167,7 +167,7 @@ char	*string_parser(char *str)
 			{
 				if (str[i] == '$')
 				{
-					var_name = get_var_name(str+i);
+					var_name = get_var_name(str + i);
 					string = expand(string, var_name);
 					i += ft_strlen(var_name);
 					free(var_name);
@@ -182,11 +182,9 @@ char	*string_parser(char *str)
 		}
 		else if (str[i] == '\'')
 		{
-		
 			i++;
 			while (str[i] && str[i] != '\'')
 			{
-				
 				string = append_to_str(string, str[i]);
 				i++;
 			}
@@ -198,7 +196,7 @@ char	*string_parser(char *str)
 		{
 			if (str[i] == '$')
 			{
-				var_name = get_var_name(str+i);
+				var_name = get_var_name(str + i);
 				string = expand(string, var_name);
 				i += ft_strlen(var_name);
 				free(var_name);
@@ -208,7 +206,6 @@ char	*string_parser(char *str)
 			i++;
 		}
 	}
-
 	return (string);
 }
 

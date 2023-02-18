@@ -1,6 +1,6 @@
 #include "../include/minishell.h"
 
-t_list *get_env(char **env)
+t_list	*get_env(char **env)
 {
 	int	i;
 	char **all;

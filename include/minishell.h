@@ -15,12 +15,19 @@
 #include <stdbool.h>
 #include<sys/stat.h>
 
+typedef struct s_global_data{
+	int		exit_status;
+	t_list	*env;
+}	t_global_data;
+
+t_global_data	g_data;
+
 typedef struct s_lexer
 {
-  char *src;
-  int index;
-  char c;
-}             t_lexer;
+	char	*src;
+	int		index;
+	char	c;
+}		t_lexer;
 
 typedef struct s_parser
 {
@@ -89,19 +96,19 @@ char **env_to_tab(t_list *list);
 
 
       //builtins//
-int   builtins(t_list *list, t_list *envi);
-void unset(char **var, t_list *envi);
-void	env(t_list* senv);
-void	ft_export(char **var, t_list *env);
+int		builtins(t_list *list);
+void	unset(char **var);
+void	env(void);
+void	ft_export(char **var);
 void	pwd(void);
 void	echo(char **s);
 void	ft_exit(char **s);
-void	ft_cd(char **s, t_list *env);
-int	size_par(char **s);
+void	ft_cd(char **s);
+int		size_par(char **s);
+char	*get_new_env(char *s);
 
       //execut//
-int start(t_list *list, t_list *envi);
-void	execute(t_list *cmds , char **env);
-
+int		start(t_list *list);
+void	execute(t_list *cmds, char **env);
 
 #endif
