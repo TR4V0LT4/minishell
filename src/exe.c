@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exe.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/19 13:45:19 by skhaliff          #+#    #+#             */
+/*   Updated: 2023/02/19 13:45:42 by skhaliff         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../include/minishell.h"
 
@@ -9,8 +20,6 @@ void	execute(t_list *cmds, char **env)
 	int			i;
 	t_parser	*tmp;
 
-	//pipe1[2]};
-	//buffer[2];
 	tmp = (t_parser *)malloc(sizeof(t_parser));
 	i = 0;
 	while (cmds)
@@ -51,7 +60,7 @@ void	execute(t_list *cmds, char **env)
 			tmp->cmd[0] = add_path(tmp->cmd[0]);
 			if (execve(tmp->cmd[0], tmp->cmd, env) == -1)
 			{
-				//printf("commande not found\n");
+				printf("commande not found\n");
 				exit(1);
 			}
 		}

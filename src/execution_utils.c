@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execution_utils.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/19 13:45:55 by skhaliff          #+#    #+#             */
+/*   Updated: 2023/02/19 13:46:07 by skhaliff         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 t_list	*get_env(char **env)
 {
-	int	i;
-	char **all;
-	t_env *temp_var;
-	t_list  *env_list;
+	int		i;
+	char	**all;
+	t_env	*temp_var;
+	t_list	*env_list;
 
 	i = 0;
 	env_list = NULL;
