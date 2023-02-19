@@ -16,7 +16,7 @@
 #include<sys/stat.h>
 
 typedef struct s_global_data{
-	int		exit_status;
+	int	exit_status;
 	t_list	*env;
 }	t_global_data;
 

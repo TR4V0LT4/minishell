@@ -5,7 +5,6 @@ int	main(int ac, char **av, char **env)
 	char	*str;
 	t_list	*tokens;
 	t_list	*cmd;
-	//t_list	*t_env;
 
 	g_data.env = get_env(env);
 	cmd = NULL;

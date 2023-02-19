@@ -6,13 +6,13 @@
 #    By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/26 20:23:30 by wlahyani          #+#    #+#              #
-#    Updated: 2023/02/18 11:21:06 by skhaliff         ###   ########.fr        #
+#    Updated: 2023/02/18 23:56:59 by skhaliff         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRC = src/main.c src/lexer.c src/token.c src/parser.c  src/parser_utils.c src/exe.c src/builtins.c src/execution_utils.c src/ft_exit.c src/ft_cd.c
+SRC = src/main.c src/lexer.c src/token.c src/parser.c  src/parser_utils.c src/exe.c src/builtins.c src/execution_utils.c src/ft_exit.c src/ft_cd.c src/ft_echo.c src/ft_export.c
 
 OBJ = ${SRC:%.c=%.o}
 

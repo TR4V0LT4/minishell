@@ -6,7 +6,7 @@
 /*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:05:46 by skhaliff          #+#    #+#             */
-/*   Updated: 2023/02/18 18:24:32 by skhaliff         ###   ########.fr       */
+/*   Updated: 2023/02/19 12:50:46 by skhaliff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,35 +46,37 @@ int	size_par(char **s)
 	return (i);
 }
 
-void unset(char **var)
+void	unset(char **var)
 {
-	int	i = 0;
-	t_env * temp_var;
-	t_list *previous;
+	int		i;
+	t_env	*temp_var;
+	t_list	*previous;
+	t_list	*a = g_data.env;
 
+	i = 0;
 	temp_var = malloc(sizeof(t_env));
 	i = size_par(var);
 	if (i == 1)
 		return ;
 	else if (i == 2)
 	{
-	if (g_data.env->content == NULL)
-		return ;
-	while (g_data.env)
-	{	
-		temp_var = (t_env *) g_data.env->content;
-		if (!ft_strncmp(temp_var->key, var[1], ft_strlen(var[1])))
-		{
-			if (g_data.env->next)
-				previous->next = g_data.env->next;
-			else
-				previous->next = NULL;
-			free(g_data.env);
+		if (a->content == NULL)
 			return ;
+		while (a)
+		{
+			temp_var = (t_env *) a->content;
+			if (!ft_strncmp(temp_var->key, var[1], ft_strlen(var[1])))
+			{
+				if (a->next)
+					previous->next = a->next;
+				else
+					previous->next = NULL;
+				free(a);
+				return ;
+			}
+			previous = a;
+			a = a->next;
 		}
-		previous = g_data.env;
-		g_data.env = g_data.env->next;
-	}
 	}
 }
 
@@ -92,88 +94,12 @@ void	env(void)
 	}
 }
 
-void	print_export(t_list *export, t_env *temp_var)
-{
-	while (export)
-	{
-		temp_var = (t_env *)(export->content);
-		printf("%s=%s\n", temp_var->key, temp_var->value);
-		export = export->next;
-	}
-}
-
-void	ft_export(char **var)
-{
-	int		i;
-	char	**all;
-	t_env	*temp_var;
-	t_list	*export;
-
-	export = g_data.env;
-	temp_var = malloc(sizeof(t_env));
-	i = size_par(var);
-	if (i == 1)
-		print_export(export, temp_var);
-	else
-	{
-		all = ft_split(var[1], '=');
-		temp_var->key = all[0];
-		temp_var->value = all[1];
-		if (!ft_isalpha(temp_var->key[0]) && temp_var->key[0] != '_')
-			printf("not a valid identifier\n");
-		else
-			ft_lstadd_back(&export, ft_lstnew(temp_var));
-		//free(temp_var);
-	}
-}
-
 void	pwd(void)
 {
 	char	s[PATH_MAX];
 
 	if (getcwd(s, sizeof(s)) != NULL)
 		printf("%s\n", s);
-}
-
-int	remove_line(char *s)
-{
-	int	i;
-
-	i = 0;
-	if (s[i] == '-')
-		i++;
-	else
-		return (0);
-	while (s[i])
-	{
-		if (s[i] == 'n')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-void	echo(char **s)
-{
-	int	i;
-	int	remove_new_line;
-
-	i = 1;
-	remove_new_line = 0;
-	while (s[i])
-	{
-		if (remove_line(s[1]))
-		{
-			remove_new_line = 1;
-			i++;
-		}
-		printf("%s", s[i]);
-		if (s[i + 1] != NULL)
-			printf(" ");
-		i++;
-	}
-	if (!remove_new_line)
-		printf("\n");
 }
 
 char	*get_new_env(char *s)
