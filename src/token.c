@@ -46,7 +46,6 @@ t_token *get_token(t_lexer *lexer)
       token =  init_token (s,TOKEN_STRING);
     else
 		token = _switch(lexer);
-		//free(s);
     return (token);
 }
 

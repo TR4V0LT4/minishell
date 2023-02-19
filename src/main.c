@@ -1,4 +1,3 @@
-
 #include "../include/minishell.h"
 
 char	*get_new_env(char *s)
@@ -21,18 +20,24 @@ char	*get_new_env(char *s)
 
 int	main(int ac, char **av, char **env)
 {
+ 	
 	char	*str;
 	t_list	*tokens;
 	t_list	*cmd;
+	t_list	*t_env;
 
-	//g_data.exit_status = 0;
-	g_data.env = get_env(env);
+	t_env = get_env(env);
 	cmd = NULL;
 	(void)ac;
 	(void)av;
+	
+    signal(SIGINT, handler);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		str = readline("➜ minishell ");
+		if(str == NULL)
+			exit(0);
 		if (!(str[0] != '\0'))
 			continue ;
 		add_history(str);
@@ -43,8 +48,11 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		}
 		cmd = fill_command(tokens);
-		start(cmd);
+		//print_cmd(cmd);
+		start(cmd, t_env);
 		deallocate(tokens);
+
+		free(str);
 	}
 	return (0);
 }

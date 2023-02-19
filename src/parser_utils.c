@@ -1,6 +1,12 @@
 
 #include "../include/minishell.h"
-
+void handler()
+{
+    printf ("\n");
+    rl_on_new_line();
+   rl_replace_line("", 0);
+    rl_redisplay();
+}
 void	ft_free(char	**t)
 {
 	int	i;
@@ -10,14 +16,37 @@ void	ft_free(char	**t)
 		free (t[i]);
 }
 
-void	free_path_arr(char	**path)
+char *get_var_name(char *str)
 {
-	int	i;
+	int i = 1; // dollar $ 
+	char *name;
 
-	i = 0;
-	while (path[i])
-		free(path[i++]);
-	free(path);
+	name = NULL;
+	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_') )
+	{
+		name = append_to_str(name, str[i]);
+		i++;
+	}
+	if (!name)
+		name = append_to_str(name, '\0');
+	return (name);
+}
+
+char *expand(char *result, char *var_name)
+{
+	char *value;
+	char *tmp;
+
+	value  = getenv(var_name);
+	tmp = result;
+	result = ft_strjoin(result, value);
+	if (result == NULL)
+		result = append_to_str(result, '\0');
+	free(tmp);
+	// printf("var_name :[%s] \n", var_name);
+	// printf("value :[%s] \n", value);
+	// printf("result  :[%s] \n", result);
+	return (result);
 }
 
 char	**realloc_cmd(char **cmd, char *str)
@@ -95,6 +124,7 @@ void print_cmd(t_list *list)
                     i++;
                 }
              printf("in_file =  %d && out_file = %d\n", curr->in_file,curr->out_file);
+			 printf("============================================================================\n");
             list = list->next;
         }
 }
