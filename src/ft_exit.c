@@ -6,7 +6,7 @@
 /*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 13:46:32 by skhaliff          #+#    #+#             */
-/*   Updated: 2023/02/19 13:46:33 by skhaliff         ###   ########.fr       */
+/*   Updated: 2023/02/19 15:23:17 by skhaliff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,19 @@ int	par_number(char *s)
 void	not_number(void)
 {
 	write(1, "numeric argument required\n", 27);
-	exit(255);
+	g_data.exit_status = 255;
+	exit(g_data.exit_status);
 }
 
 void	one_parameter(char *s)
 {
-	int	p;
-
 	if (!par_number(s))
 		not_number();
 	else
 	{
-		p = ft_atoi(s);
+		g_data.exit_status = ft_atoi(s);
 		write(1, "exit\n", 6);
-		exit (p % 256);
+		exit (g_data.exit_status % 256);
 	}
 }
 
@@ -54,7 +53,7 @@ void	ft_exit(char **s)
 	if (size == 1)
 	{
 		write(1, "exit\n", 6);
-		exit(0);
+		exit(g_data.exit_status);
 	}
 	else if (size == 2)
 		one_parameter(s[1]);

@@ -185,10 +185,15 @@ char	*string_parser(char *str)
 		{
 			if (str[i] == '$')
 			{
-				var_name = get_var_name(str + i);
-				string = expand(string, var_name);
-				i += ft_strlen(var_name);
-				free(var_name);
+				if (str[i + 1] == '?')
+					printf("%d\n", g_data.exit_status);
+				else
+				{
+					var_name = get_var_name(str + i);
+					string = expand(string, var_name);
+					i += ft_strlen(var_name);
+					free(var_name);
+				}
 			}
 			else
 				string = append_to_str(string, str[i]);

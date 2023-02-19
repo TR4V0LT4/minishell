@@ -97,14 +97,14 @@ char **env_to_tab(t_list *list);
 
       //builtins//
 int		builtins(t_list *list);
-void	unset(char **var);
-void	env(void);
+void	ft_unset(char **var);
+void	ft_env(void);
 void	ft_export(char **var);
-void	pwd(void);
-void	echo(char **s);
+void	ft_pwd(void);
+void	ft_echo(char **s);
 void	ft_exit(char **s);
 void	ft_cd(char **s);
-int		size_par(char **s);
+int	size_par(char **s);
 char	*get_new_env(char *s);
 
       //execut//

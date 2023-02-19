@@ -6,7 +6,7 @@
 /*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 13:46:16 by skhaliff          #+#    #+#             */
-/*   Updated: 2023/02/19 13:46:19 by skhaliff         ###   ########.fr       */
+/*   Updated: 2023/02/19 16:34:57 by skhaliff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,7 @@ void	g_home(void)
 			old = getcwd(NULL, 0);
 			change_old(old);
 			if (chdir(l->value) == -1)
-			{
 				printf("ERREUR");
-				exit (1);
-			}
 			else
 				home = getcwd(NULL, 0);
 		}
@@ -84,7 +81,10 @@ void	ft_cd(char **s)
 		old = getcwd(NULL, 0);
 		change_old(old);
 		if (chdir(s[1]) == -1)
+		{
 			printf("No such file or directory\n");
+			g_data.exit_status = 1;
+		}
 		p = getcwd(NULL, 0);
 		change_pwd(p);
 	}

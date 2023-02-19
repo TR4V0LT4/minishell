@@ -6,7 +6,7 @@
 /*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 13:45:19 by skhaliff          #+#    #+#             */
-/*   Updated: 2023/02/19 13:45:42 by skhaliff         ###   ########.fr       */
+/*   Updated: 2023/02/19 16:37:56 by skhaliff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,6 @@ void	execute(t_list *cmds, char **env)
 		pid = fork();
 		if (pid == 0)
 		{
-			if (tmp->in_file != 0)
-			{
-				close(0);
-				dup2(tmp->in_file, STDIN_FILENO);
-				close(tmp->in_file);
-			}
-			if (tmp->out_file != 1)
-			{
-				close (1);
-				dup2(tmp->out_file, STDOUT_FILENO);
-				close(tmp->out_file);
-			}
 			if (cmds->next)
 			{
 				close(pipe1[0]);
@@ -57,11 +45,23 @@ void	execute(t_list *cmds, char **env)
 				dup2(buffer[0], 0);
 				close(buffer[0]);
 			}
+			if (tmp->in_file != 0)
+			{
+				close(0);
+				dup2(tmp->in_file, STDIN_FILENO);
+				close(tmp->in_file);
+			}
+			if (tmp->out_file != 1)
+			{
+				close (1);
+				dup2(tmp->out_file, STDOUT_FILENO);
+				close(tmp->out_file);
+			}
 			tmp->cmd[0] = add_path(tmp->cmd[0]);
 			if (execve(tmp->cmd[0], tmp->cmd, env) == -1)
 			{
-				printf("commande not found\n");
-				exit(1);
+				printf("command not found\n");
+				g_data.exit_status = 127;
 			}
 		}
 		if (buffer[0] != -1)
