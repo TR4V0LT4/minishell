@@ -34,7 +34,7 @@ int	check_builtin(t_list *list)
 	return (0);
 }
 
-int	builtins(t_list *list)
+void	builtins(t_list *list)
 {
 	t_parser	*d;
 
@@ -53,9 +53,9 @@ int	builtins(t_list *list)
 		ft_env();
 	else if (!ft_strcmp(d->cmd[0], "exit"))
 		ft_exit(d->cmd);
-	else
-		return (1);
-	return (0);
+	// else
+	// 	return (1);
+	// return (0);
 }
 
 int	size_par(char **s)

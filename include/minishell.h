@@ -78,7 +78,9 @@ int     istoken(char c);
 t_list  *fill_command(t_list *tokens);
 int     check_syntax(t_list *tokens);
 void    init_parser(t_parser *cmd);
-char	*string_parser(char *str);
+int	quotes_checker(char *str);
+char    *remove_quotes(char *str , int *heredoc_flag, int prev_type);
+t_list *parsing_quotes(t_list *tokens, int *flag);
 
         //parser_utils.c//
 void  deallocate(t_list *list);
@@ -98,7 +100,7 @@ char    **env_to_tab(t_list *list);
 
 
       //builtins//
-int		builtins(t_list *list);
+void	builtins(t_list *list);
 void	ft_unset(char **var);
 void	ft_env(void);
 void	ft_export(char **var);

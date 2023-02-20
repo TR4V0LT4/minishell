@@ -56,7 +56,12 @@ char	**realloc_cmd(char **cmd, char *str)
 
 	i = 0;
 	if (!cmd[0])
-		cmd[0] = ft_strdup(str);
+	{
+		if(!ft_strdup(str))
+			cmd[0] = "\0";
+		else
+			cmd[0] = ft_strdup(str);
+	}
 	else
 	{
 		while (cmd[i])
