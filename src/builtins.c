@@ -6,30 +6,52 @@
 /*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:05:46 by skhaliff          #+#    #+#             */
-/*   Updated: 2023/02/19 16:33:03 by skhaliff         ###   ########.fr       */
+/*   Updated: 2023/02/20 17:03:40 by skhaliff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int	check_builtin(t_list *list)
+{
+	t_parser	*d;
+
+	d = (t_parser *)list->content;
+	if (!ft_strcmp(d->cmd[0], "echo"))
+		return (1);
+	else if (!ft_strcmp(d->cmd[0], "cd"))
+		return (1);
+	else if (!ft_strcmp(d->cmd[0], "pwd"))
+		return (1);
+	else if (!ft_strcmp(d->cmd[0], "export"))
+		return (1);
+	else if (!ft_strcmp(d->cmd[0], "unset"))
+		return (1);
+	else if (!ft_strcmp(d->cmd[0], "env"))
+		return (1);
+	else if (!ft_strcmp(d->cmd[0], "exit"))
+		return (1);
+	return (0);
+}
 
 int	builtins(t_list *list)
 {
 	t_parser	*d;
 
 	d = (t_parser *)list->content;
-	if (!ft_strncmp(d->cmd[0], "echo", 5))
+	if (!ft_strcmp(d->cmd[0], "echo"))
 		ft_echo(d->cmd);
-	else if (!ft_strncmp(d->cmd[0], "cd", 3))
+	else if (!ft_strcmp(d->cmd[0], "cd"))
 		ft_cd(d->cmd);
-	else if (!ft_strncmp(d->cmd[0], "pwd", 4))
+	else if (!ft_strcmp(d->cmd[0], "pwd"))
 		ft_pwd();
-	else if (!ft_strncmp(d->cmd[0], "export", 7))
+	else if (!ft_strcmp(d->cmd[0], "export"))
 		ft_export(d->cmd);
-	else if (!ft_strncmp(d->cmd[0], "unset", 6))
+	else if (!ft_strcmp(d->cmd[0], "unset"))
 		ft_unset(d->cmd);
-	else if (!ft_strncmp(d->cmd[0], "env", 4))
+	else if (!ft_strcmp(d->cmd[0], "env"))
 		ft_env();
-	else if (!ft_strncmp(d->cmd[0], "exit", 5))
+	else if (!ft_strcmp(d->cmd[0], "exit"))
 		ft_exit(d->cmd);
 	else
 		return (1);

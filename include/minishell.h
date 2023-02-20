@@ -108,6 +108,7 @@ void	ft_exit(char **s);
 void	ft_cd(char **s);
 int	size_par(char **s);
 char	*get_new_env(char *s);
+int	check_builtin(t_list *list);
 
       //execut//
 int   start(t_list *list);

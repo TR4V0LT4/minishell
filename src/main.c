@@ -20,7 +20,6 @@ char	*get_new_env(char *s)
 
 int	main(int ac, char **av, char **env)
 {
- 	
 	char	*str;
 	t_list	*tokens;
 	t_list	*cmd;
@@ -29,13 +28,12 @@ int	main(int ac, char **av, char **env)
 	cmd = NULL;
 	(void)ac;
 	(void)av;
-	
-    signal(SIGINT, handler);
+	signal(SIGINT, handler);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		str = readline("➜ minishell ");
-		if(str == NULL)
+		if (str == NULL)
 			exit(0);
 		if (!(str[0] != '\0'))
 			continue ;

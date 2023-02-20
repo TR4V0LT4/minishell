@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wlahyani <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 22:10:00 by wlahyani          #+#    #+#             */
-/*   Updated: 2023/02/19 16:44:30 by wlahyani         ###   ########.fr       */
+/*   Updated: 2023/02/20 16:45:33 by skhaliff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,10 +113,10 @@ t_list	*fill_command(t_list *tokens)
 					tmp->in_file = open(curr->value, O_RDWR);
 				else
 				{
-					printf("im here\n");
+					//printf("im here\n");
 					printf("minishell: %s: NO such file or directory\n", curr->value);
 					tmp->cmd[0] = "\0";
-					if(tokens->next)
+					if (tokens->next)
 					{
 						tokens = tokens->next;
 						curr = (t_token *) tokens->content;
@@ -175,8 +175,6 @@ char	*string_parser(char *str)
 			i++;
 			while (str[i] && str[i] != '\'')
 			{
-				if (str[i + 1] == '?')
-					printf("%d\n", g_data.exit_status);
 				string = append_to_str(string, str[i]);
 				i++;
 			}
@@ -188,7 +186,9 @@ char	*string_parser(char *str)
 		{
 			if (str[i] == '$')
 			{
-				var_name = get_var_name(str+i);
+				if (str[i + 1] == '?')
+					printf("%d\n", g_data.exit_status);
+				var_name = get_var_name(str + i);
 				string = expand(string, var_name);
 				i += ft_strlen(var_name);
 				free(var_name);

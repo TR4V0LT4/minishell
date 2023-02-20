@@ -9,10 +9,10 @@ void	execute(t_list *cmds , char **env)
 	int	pid;
 	int i ;
 	t_parser *tmp;
-	
-	tmp =(t_parser *) malloc(sizeof(t_parser));
-	i = 0;
+	//int result;
 
+	tmp = (t_parser *) malloc(sizeof(t_parser));
+	i = 0;
 	while (cmds)
 	{
 		tmp = (t_parser *) cmds->content;
@@ -23,13 +23,12 @@ void	execute(t_list *cmds , char **env)
 		}
 		if(!ft_strncmp(tmp->cmd[0] , "\0", 1))
 		{
-				cmds = cmds->next;	
+				cmds = cmds->next;
 				continue;
 		}
 		pid = fork();
 		if (pid == 0)
 		{
-			
 			if(cmds->next)
 			{
 				close(pipe1[0]);
@@ -39,10 +38,9 @@ void	execute(t_list *cmds , char **env)
 			if(buffer[0] != -1)
 			{
 				close(buffer[1]);
-				dup2(buffer[0],0);
+				dup2(buffer[0], 0);
 				close(buffer[0]);
 			}
-		
 			if(tmp->in_file != 0)
 			{
 				dup2(tmp->in_file, STDIN_FILENO);
@@ -53,10 +51,10 @@ void	execute(t_list *cmds , char **env)
 				dup2(tmp->out_file, STDOUT_FILENO);
 				close(tmp->out_file);
 			}
-			if(!builtins(cmds))
+			if(check_builtin(cmds) && !builtins(cmds))
 				exit (0);
 			tmp->cmd[0] = add_path(tmp->cmd[0]);
-			if(execve(tmp->cmd[0], tmp->cmd, env) == -1)
+			if (execve(tmp->cmd[0], tmp->cmd, env) == -1)
 				printf("minishell : command not found\n");
 		}
 		unlink("/tmp/minishell");
@@ -72,11 +70,14 @@ void	execute(t_list *cmds , char **env)
 		buffer[1] = pipe1[1];
 		pipe1[0] = -1;
 		pipe1[1] = -1;
-		cmds = cmds->next;	
+		cmds = cmds->next;
 		i++;
 	}
 	while (i--)
-		wait(NULL);
+		waitpid(pid, NULL, 0);
+	// if(cmds->next == NULL)
+	// 	waitpid(pid, &result, 0);
+	// int exit_status = WIFEXITED(result); // exit status
 }
 
 int start(t_list *list)
