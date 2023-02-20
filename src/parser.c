@@ -43,10 +43,12 @@ int	heredoc(char *value)
 		
 		while (ft_strncmp(str, value, ft_strlen(value) + 1))
 		{
-			str = readline(">");
-			str = string_parser(str);
+			if(*str == '\0')
+			exit(0);
 			if(str == NULL)
 				exit(0);
+			str = readline(">");
+			//str = string_parser(str);
 			if (ft_strncmp(str, value, ft_strlen(value) + 1) )
 			{
 				write(fd, str, ft_strlen(str));
@@ -106,15 +108,32 @@ t_list	*fill_command(t_list *tokens)
 			tokens = tokens->next;
 			curr = (t_token *) tokens->content;
 			if (curr->type == TOKEN_STRING)
-				tmp->in_file = open(curr->value, O_CREAT | O_RDWR, 0664);
+			{
+				if (access(curr->value, F_OK) == 0)
+					tmp->in_file = open(curr->value, O_RDWR);
+				else
+				{
+					printf("im here\n");
+					printf("minishell: %s: NO such file or directory\n", curr->value);
+					tmp->cmd[0] = "\0";
+					if(tokens->next)
+					{
+						tokens = tokens->next;
+						curr = (t_token *) tokens->content;
+					}
+				}
+			}
 		}
 		else if (curr->type == TOKEN_PIPE)
 		{
 			ft_lstadd_back(&cmd_list, ft_lstnew(tmp));
 			tmp = init_content(tmp);
 		}
-		tokens = tokens->next;
-		curr = (t_token *) tokens->content;
+		if(tokens->next)
+		{
+			tokens = tokens->next;
+			curr = (t_token *) tokens->content;
+		}
 	}
 	ft_lstadd_back(&cmd_list, ft_lstnew(tmp));
 	return (cmd_list);
@@ -206,7 +225,7 @@ int	check_syntax(t_list *tokens)
 	}
 	while (curr->type != TOKEN_EOF)
 	{
-		if (curr->type == TOKEN_PIPE && next->type == TOKEN_REDIRECT)
+		if (curr->type == TOKEN_PIPE && (next->type == TOKEN_REDIRECT  || next->type == TOKEN_LREDIRECT))
 		{
 			curr = (t_token *) tokens->content;
 			next = (t_token *) tokens->next->content;

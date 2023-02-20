@@ -59,7 +59,7 @@ char *add_path(char *cmd)
     char **path;
     char *command;
     int i = 0;
-    path = ft_split(getenv("PATH"), ':');
+    path = ft_split(get_new_env("PATH"), ':');
     while(path[i])
     {
         command = ft_strjoin(path[i],"/");

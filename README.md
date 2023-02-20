@@ -57,4 +57,26 @@ echo oui | echo non | echo something | grep something ==> oui expect  something
 => string parser "\0"
 => heredoc  parse delimeter
 => $?
+=> cat < l
 
+==>➜ minishell cat <<$"USER"
+>USER
+>$USER
+>$"USER"
+>wlahyani
+
+=> ➜ minishell cat << g
+>fasd
+> ctrl + d segv
+
+=>cd????
+
+=>export
+=>env
+=>builtins
+
+=>➜ minishell ➜ minishell ctrl + c
+=> ➜ minishell < scat  segv
+<< l ls | < Makefile cat > file401 | << h ls >> file401 || << q open the heredocs before the syntax error
+ls > file401 | cat file401 >> file401 hanging 
+ls > file1 | cat file1

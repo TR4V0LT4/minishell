@@ -110,7 +110,7 @@ int	size_par(char **s);
 char	*get_new_env(char *s);
 
       //execut//
-int   start(t_list *list, t_list *envi);
+int   start(t_list *list);
 void  execute(t_list *cmds , char **env);
 
       // signlas // 

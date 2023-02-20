@@ -60,7 +60,10 @@ void	g_home(void)
 			if (chdir(l->value) == -1)
 				printf("ERREUR");
 			else
+			{
 				home = getcwd(NULL, 0);
+				printf(">> %s\n", home);
+			}
 		}
 		a = a->next;
 	}

@@ -21,9 +21,15 @@ void	execute(t_list *cmds , char **env)
 			if((pipe(pipe1) == -1))
 			return ;
 		}
+		if(!ft_strncmp(tmp->cmd[0] , "\0", 1))
+		{
+				cmds = cmds->next;	
+				continue;
+		}
 		pid = fork();
 		if (pid == 0)
 		{
+			
 			if(cmds->next)
 			{
 				close(pipe1[0]);
@@ -36,24 +42,22 @@ void	execute(t_list *cmds , char **env)
 				dup2(buffer[0],0);
 				close(buffer[0]);
 			}
+		
 			if(tmp->in_file != 0)
-			{ 
-				if(dup2(tmp->in_file, STDIN_FILENO) == -1)
-					printf("failed \n");
+			{
+				dup2(tmp->in_file, STDIN_FILENO);
 				close(tmp->in_file);
 			}
 			if(tmp->out_file != 1)
 			{
-				printf("%d\n", tmp->out_file);
 				dup2(tmp->out_file, STDOUT_FILENO);
 				close(tmp->out_file);
 			}
-			tmp->cmd[0] = add_path(tmp->cmd[0]);
-
 			if(!builtins(cmds))
 				exit (0);
-			else
-				execve(tmp->cmd[0], tmp->cmd, env);
+			tmp->cmd[0] = add_path(tmp->cmd[0]);
+			if(execve(tmp->cmd[0], tmp->cmd, env) == -1)
+				printf("minishell : command not found\n");
 		}
 		unlink("/tmp/minishell");
 		if (tmp->in_file != 0)
@@ -68,21 +72,19 @@ void	execute(t_list *cmds , char **env)
 		buffer[1] = pipe1[1];
 		pipe1[0] = -1;
 		pipe1[1] = -1;
-		wait(NULL);
 		cmds = cmds->next;	
 		i++;
 	}
+	while (i--)
+		wait(NULL);
 }
 
-int start(t_list *list, t_list *envi)
+int start(t_list *list)
 {
 	char **tab_env;
-	 if (ft_lstsize(list) > 0)
-	{
-		tab_env = env_to_tab(envi);
+
+	//if (ft_lstsize(list) == 1 && builtins(list));
+		tab_env = env_to_tab(g_data.env);
 		execute(list,tab_env);
-	}
-	else
-		return(1);
 	return(0);
 }
