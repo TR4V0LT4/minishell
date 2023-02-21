@@ -11,7 +11,7 @@ t_list *get_env(char **env)
 	env_list  =  NULL;
 	while (env[i] != NULL)
 	{
-		temp_var = malloc(sizeof(t_env));
+		temp_var = s_malloc(sizeof(t_env));
 		all = ft_split(env[i], '=');
 		temp_var->key = all[0];
 		temp_var->value= all[1];
@@ -32,7 +32,7 @@ char **env_to_tab(t_list *list)
 
 	i = 0;
 	size = ft_lstsize(list);
-	t = (char **)malloc(sizeof(char *) * (size + 1));
+	t = (char **)s_malloc(sizeof(char *) * (size + 1));
 	t[size] = NULL;
 	while(list)
 	{

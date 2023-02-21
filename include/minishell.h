@@ -25,6 +25,8 @@ typedef struct s_lexer
 
 typedef struct s_global_data{
 	int		exit_status;
+  void *to_free[1000000];
+  int index;
 	t_list	*env;
 }	t_global_data;
 
@@ -120,5 +122,7 @@ void  execute(t_list *cmds , char **env);
       // signlas // 
 void handler();
 void rl_replace_line (char *, int);
+
+void *s_malloc(int size);
 
 #endif

@@ -2,7 +2,7 @@
 #include "../include/minishell.h"
 void handler()
 {
-    printf ("\n");
+    write (1, "\n", 1);
     rl_on_new_line();
    rl_replace_line("", 0);
     rl_redisplay();
@@ -66,7 +66,7 @@ char	**realloc_cmd(char **cmd, char *str)
 	{
 		while (cmd[i])
 			i++;
-		tmp = (char **)malloc(sizeof(char *) * (i + 1));
+		tmp = (char **)s_malloc(sizeof(char *) * (i + 1));
 		i = 0;
 		while (cmd[i])
 		{	
@@ -74,7 +74,7 @@ char	**realloc_cmd(char **cmd, char *str)
 			i++;
 		}
 		tmp[i] = NULL;
-		cmd = (char **) malloc(sizeof(char *) * (i + 2));
+		cmd = (char **) s_malloc(sizeof(char *) * (i + 2));
 		i = 0;
 		while (tmp[i])
 		{	
@@ -118,7 +118,7 @@ void print_tokens(t_list *list)
 void print_cmd(t_list *list)
 {
     int i = 0;
-    t_parser *curr = (t_parser *)malloc(sizeof(t_parser ));
+    t_parser *curr = (t_parser *)s_malloc(sizeof(t_parser ));
         while(list)
         {
                curr = (t_parser *)list->content;

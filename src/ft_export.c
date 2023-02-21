@@ -30,7 +30,7 @@ void	ft_export(char **var)
 	t_list	*export;
 
 	export = g_data.env;
-	temp_var = malloc(sizeof(t_env));
+	temp_var = s_malloc(sizeof(t_env));
 	i = size_par(var);
 	if (i == 1)
 		print_export(export, temp_var);

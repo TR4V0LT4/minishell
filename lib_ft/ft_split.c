@@ -89,7 +89,7 @@ static	void	ft_my_alloc(char **t, char const *s, int wn, char c)
 			len++;
 			i++;
 		}
-		t[j] = (char *)malloc(sizeof(char) * (len + 1));
+		t[j] = (char *)s_malloc(sizeof(char) * (len + 1));
 		if (!t[j])
 			return (myfree(t, j));
 		j++;
@@ -104,7 +104,7 @@ char	**ft_split(char const *s, char c)
 	if (!s)
 		return (0);
 	wn = count_words(s, c);
-	t = (char **)malloc(sizeof(char *) * wn + sizeof(NULL));
+	t = (char **)s_malloc(sizeof(char *) * wn + sizeof(NULL));
 	if (!t)
 		return (0);
 	t[wn] = NULL;

@@ -54,7 +54,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	start = find_edges(s1, set, 0, 1);
 	end = find_edges(s1, set, ft_strlen(s1) - 1, -1);
 	len = end - start + 1;
-	t = (char *) malloc(sizeof(char) * len +1);
+	t = (char *) s_malloc(sizeof(char) * len +1);
 	if (!t)
 		return (0);
 	while (i < len)

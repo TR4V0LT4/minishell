@@ -57,7 +57,7 @@ char	*append_to_str(char *str, char c)
 	char	*str_char;
 
 	tmp = str;
-	str_char = malloc(sizeof(char) * 2);
+	str_char = s_malloc(sizeof(char) * 2);
 	str_char[0] = c;
 	str_char[1] = '\0';
 	if (!str)

@@ -80,3 +80,8 @@ echo oui | echo non | echo something | grep something ==> oui expect  something
 << l ls | < Makefile cat > file401 | << h ls >> file401 || << q open the heredocs before the syntax error
 ls > file401 | cat file401 >> file401 hanging 
 ls > file1 | cat file1
+➜ minishell export | grep ads
+adsvdv=(null)
+➜ minishell export test==
+bash-3.2$ export
+unset 

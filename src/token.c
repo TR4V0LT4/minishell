@@ -15,7 +15,7 @@ t_token	*init_token(char *value, int type)
 {
 	t_token	*token;
 
-	token = malloc(sizeof(t_token));
+	token = s_malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);
 	token->value = value;

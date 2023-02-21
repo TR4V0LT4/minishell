@@ -40,7 +40,7 @@ void	ft_unset(char **var)
 
 	i = 0;
 	a = g_data.env;
-	temp_var = malloc(sizeof(t_env));
+	temp_var = s_malloc(sizeof(t_env));
 	previous = NULL;
 	i = size_par(var);
 	if (i == 1)

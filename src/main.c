@@ -28,10 +28,11 @@ int	main(int ac, char **av, char **env)
 	cmd = NULL;
 	(void)ac;
 	(void)av;
-	signal(SIGINT, handler);
-	signal(SIGQUIT, SIG_IGN);
+	g_data.index = 0;
 	while (1)
 	{
+	signal(SIGINT, handler);
+	signal(SIGQUIT, SIG_IGN);
 		str = readline("➜ minishell ");
 		if (str == NULL)
 			exit(0);

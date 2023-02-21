@@ -12,12 +12,21 @@
 
 #include "../include/minishell.h"
 
+void 	*s_malloc(int size)
+{
+	void	*s;
+	s = malloc(size);
+	g_data.to_free[g_data.index] = s;
+	g_data.index++;
+	return (s);
+}
+
 t_parser	*init_content(t_parser *content)
 {
-	content = (t_parser *)malloc(sizeof(t_parser));
+	content = (t_parser *)s_malloc(sizeof(t_parser));
 	content->in_file = 0;
 	content->out_file = 1;
-	content->cmd = (char **)malloc(sizeof(char *) * 2);
+	content->cmd = (char **)s_malloc(sizeof(char *) * 2);
 	content->cmd[0] = NULL;
 	content->cmd[1] = NULL;
 	return (content);

@@ -1,6 +1,10 @@
 
 #include "../include/minishell.h"
-
+void handler_heredoc (int sig)
+{
+	(void)sig;
+	exit(0);
+}
 void	execute(t_list *cmds , char **env)
 {
 	(void) env;
@@ -11,7 +15,7 @@ void	execute(t_list *cmds , char **env)
 	t_parser *tmp;
 	//int result;
 
-	tmp = (t_parser *) malloc(sizeof(t_parser));
+	tmp = (t_parser *) s_malloc(sizeof(t_parser));
 	i = 0;
 	while (cmds)
 	{
@@ -21,9 +25,13 @@ void	execute(t_list *cmds , char **env)
 			if((pipe(pipe1) == -1))
 			return ;
 		}
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
 		pid = fork();
 		if (pid == 0)
 		{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_IGN);
 			if(cmds->next)
 			{
 				close(pipe1[0]);
@@ -53,7 +61,10 @@ void	execute(t_list *cmds , char **env)
 			}
 			tmp->cmd[0] = add_path(tmp->cmd[0]);
 			if (execve(tmp->cmd[0], tmp->cmd, env) == -1)
+			{
 				printf("minishell : command not found\n");
+				exit(0);
+			}
 		}
 		unlink("/tmp/minishell");
 		if (tmp->in_file != 0)
@@ -71,9 +82,9 @@ void	execute(t_list *cmds , char **env)
 		cmds = cmds->next;
 		i++;
 	}
-	while (i--)
-		wait(NULL);
-		//waitpid(pid, NULL, 0);
+	while (waitpid(-1, NULL, 0) != -1 );
+		//wait(NULL);
+		
 	// if(cmds->next == NULL)
 	// 	waitpid(pid, &result, 0);
 	// int exit_status = WIFEXITED(result); // exit status
