@@ -53,9 +53,6 @@ void	builtins(t_list *list)
 		ft_env();
 	else if (!ft_strcmp(d->cmd[0], "exit"))
 		ft_exit(d->cmd);
-	// else
-	// 	return (1);
-	// return (0);
 }
 
 int	size_par(char **s)

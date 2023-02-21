@@ -21,12 +21,6 @@ void	execute(t_list *cmds , char **env)
 			if((pipe(pipe1) == -1))
 			return ;
 		}
-		// if(!ft_strcmp(tmp->cmd[0] , "\0"))
-		// {
-		// 	printf("im here\n");
-		// 		cmds = cmds->next;
-		// 		continue;
-		// }
 		pid = fork();
 		if (pid == 0)
 		{
@@ -78,7 +72,8 @@ void	execute(t_list *cmds , char **env)
 		i++;
 	}
 	while (i--)
-		waitpid(pid, NULL, 0);
+		wait(NULL);
+		//waitpid(pid, NULL, 0);
 	// if(cmds->next == NULL)
 	// 	waitpid(pid, &result, 0);
 	// int exit_status = WIFEXITED(result); // exit status

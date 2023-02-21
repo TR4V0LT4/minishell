@@ -18,7 +18,7 @@ void	ft_free(char	**t)
 
 char *get_var_name(char *str)
 {
-	int i = 1; // dollar $ 
+	int i = 1;
 	char *name;
 
 	name = NULL;
@@ -37,15 +37,15 @@ char *expand(char *result, char *var_name)
 	char *value;
 	char *tmp;
 
-	value  = get_new_env(var_name);
+	if(!ft_strcmp(var_name ,"?"))
+		value = ft_itoa(g_data.exit_status);
+	else
+		value  = get_new_env(var_name);
 	tmp = result;
 	result = ft_strjoin(result, value);
 	if (result == NULL)
 		result = append_to_str(result, '\0');
 	free(tmp);
-	// printf("var_name :[%s] \n", var_name);
-	// printf("value :[%s] \n", value);
-	// printf("result  :[%s] \n", result);
 	return (result);
 }
 

@@ -35,6 +35,7 @@ void	ft_echo(char **s)
 	int	i;
 	int	remove_new_line;
 
+
 	i = 1;
 	remove_new_line = 0;
 	while (s[i])

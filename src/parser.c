@@ -38,9 +38,13 @@ char    *expanding(char *str)
     {
         if (str[i] == '$')
         {
-            //	if (str[i + 1] == '?')
-            //    printf("%d\n", g_data.exit_status);
-        	var_name = get_var_name(str + i);
+			i++;
+            	if (str[i ] == '?')
+				{
+            	    printf("%d\n", g_data.exit_status);
+					i++;
+				}
+			var_name = get_var_name(str + i);
             string = expand(string, var_name);
             i += ft_strlen(var_name);
             free(var_name);
@@ -58,8 +62,6 @@ int	heredoc(char *value, int flag)
 	int			pid;
 	int			fd;
 
-	printf("value = %s\n",value);
-	printf("value = %d\n",flag);
 	path = ft_strjoin("/tmp/", "minishell");
 	fd = open(path, O_CREAT  | O_WRONLY, 0600 );
 	pid = fork();
@@ -94,63 +96,64 @@ int	heredoc(char *value, int flag)
 }
 char    *remove_quotes(char *str , int *heredoc_flag, int prev_type)
 {
-	int             i;
-    char *string;
-    char *var_name;
+	int		i;
+	char	*string;
+	char	*var_name;
 	
 	i = 0;
     string = NULL;
     while (str[i])
+    {
+	    if (str[i] == '\"')
         {
-                if (str[i] == '\"')
-                {
-                        i++;
-                        while (str[i] && str[i] != '\"')
-                        {
-                                if (str[i] == '$')
-                                {
-                                        var_name = get_var_name(str+i);
-                                        string = expand(string, var_name);
-                                        i += ft_strlen(var_name);
-                                        free(var_name);
-                                }
-                                else
-                                        string = append_to_str(string, str[i]);
-								i++;
-                        }
-                        i++;
-						if (prev_type == TOKEN_HEREDOC)
-							*heredoc_flag = 1;
-                }
-                else if (str[i] == '\'')
-                {
-                        i++;
-                        while (str[i] && str[i] != '\'')
-                        {
-                                string = append_to_str(string, str[i]);
-                                i++;
-                        }
-                        i++;
-						if (prev_type == TOKEN_HEREDOC)
-							*heredoc_flag = 1;
-                }
-                else
-                {
-                        if (str[i] == '$')
-                        {
-                                if (str[i + 1] == '?')
-                                        printf("%d\n", g_data.exit_status);
-                                var_name = get_var_name(str + i);
-                                string = expand(string, var_name);
-                                i += ft_strlen(var_name);
-                                free(var_name);
-                        }
-                        else
-                                string = append_to_str(string, str[i]);
-                        i++;
-                }
+            i++;
+            while (str[i] && str[i] != '\"')
+            {
+        		if (str[i] == '$')
+    			{
+					if(str[i+1] == '?')
+						var_name = ft_strdup("?");
+					else
+               			var_name = get_var_name(str+i);
+  					string = expand(string, var_name);
+                    i += ft_strlen(var_name);
+                	free(var_name);
+				}
+        		else
+                	string = append_to_str(string, str[i]);
+				i++;
+ 			}
+		i++;
+		if (prev_type == TOKEN_HEREDOC)
+			*heredoc_flag = 1;
+     	}
+     	else if (str[i] == '\'')
+        {
+            i++;
+            while (str[i] && str[i] != '\'')
+            {
+                string = append_to_str(string, str[i]);
+                i++;
+            }
+            i++;
+			if (prev_type == TOKEN_HEREDOC)
+				*heredoc_flag = 1;
         }
-        return (string);
+        else
+        {
+            if (str[i] == '$')
+            {
+                var_name = get_var_name(str + i);
+                string = expand(string, var_name);
+                i += ft_strlen(var_name);
+                free(var_name);
+            }
+            else
+                string = append_to_str(string, str[i]);
+            i++;
+        }
+    }
+    return (string);
 }
 t_list *parsing_quotes(t_list *tokens, int *flag)
 {
@@ -182,7 +185,6 @@ t_list	*fill_command(t_list *tokens)
 	cmd_list = NULL;
 	tmp = init_content(tmp);
 	parsing_quotes(tokens, &flag);
-	//print_tokens(tokens);
 	curr = (t_token *) tokens->content;
 	while (curr->type != TOKEN_EOF)
 	{
@@ -219,8 +221,7 @@ t_list	*fill_command(t_list *tokens)
 					tmp->in_file = open(curr->value, O_RDWR);
 				else
 				{
-					//printf("im here\n");
-					printf("minishell: %s: NO such file or directory\n", curr->value);
+					printf("minishell: %s: No such file or directory\n", curr->value);
 					tmp->cmd[0] = "\0";
 					if (tokens->next)
 					{
@@ -252,7 +253,6 @@ int	quotes_checker(char *str)
 	i = 0;
 	string = NULL;
 
-	// "" error
 	while (str[i])
 	{
 		if (str[i] == '\"')
@@ -288,7 +288,6 @@ int	check_syntax(t_list *tokens)
 	next = (t_token *) tokens->next->content;
 	if (curr->type == TOKEN_PIPE)
 		return (printf("minishell: syntax error unexpected token `|'\n"));
-	
 	while (curr->type != TOKEN_EOF)
 	{
 		if (curr->type == TOKEN_PIPE && (next->type == TOKEN_REDIRECT  || next->type == TOKEN_LREDIRECT))
