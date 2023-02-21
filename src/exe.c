@@ -104,7 +104,7 @@ int	start(t_list *list)
 {
 	char	**tab_env;
 
-	if (ft_lstsize(list) == 1 && check_builtin(list))
+	if (ft_lstsize(list) == 1 && check_builtin(list) )
 		builtins(list);
 	else
 	{

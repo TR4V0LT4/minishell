@@ -6,7 +6,7 @@
 /*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 10:32:14 by wlahyani          #+#    #+#             */
-/*   Updated: 2023/02/21 11:00:24 by skhaliff         ###   ########.fr       */
+/*   Updated: 2023/02/21 23:18:50 by wlahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	ft_atoi(const char *str, long long *b)
 	int					i;
 
 	i = 0;
+	if (!str)
+		return (0);
 	while (str[i] && (str[i] == '\f' || str[i] == '\t' || str[i] == ' '
 			|| str[i] == '\n' || str[i] == '\r' || str[i] == '\v'))
 		i++;

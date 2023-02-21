@@ -6,7 +6,7 @@
 /*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 13:46:32 by skhaliff          #+#    #+#             */
-/*   Updated: 2023/02/21 22:05:42 by wlahyani         ###   ########.fr       */
+/*   Updated: 2023/02/21 23:38:41 by wlahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void	one_parameter(char *s)
 	int			a;
 	long long	*b;
 
-	b = NULL;
+	b = malloc(sizeof(long long ));
+	//b = NULL;
 	if (!par_number(s))
 		not_number();
 	else
@@ -50,7 +51,7 @@ void	one_parameter(char *s)
 			not_number();
 		else
 		{
-			g_data.exit_status = a;
+			g_data.exit_status = *b;
 			write(1, "exit\n", 6);
 			exit (g_data.exit_status % 256);
 		}
@@ -64,7 +65,7 @@ void	ft_exit(char **s)
 	size = size_par(s);
 	if (size == 1)
 	{
-		write(1, "exit\n", 6);
+		//write(1, "exit\n", 6);
 		exit(g_data.exit_status);
 	}
 	else if (size == 2)

@@ -3,10 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: wlahyani <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/21 23:41:17 by wlahyani          #+#    #+#             */
+/*   Updated: 2023/02/21 23:58:38 by wlahyani         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:05:46 by skhaliff          #+#    #+#             */
-/*   Updated: 2023/02/20 17:03:40 by skhaliff         ###   ########.fr       */
+/*   Updated: 2023/02/21 23:41:15 by wlahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +30,10 @@ int	check_builtin(t_list *list)
 
 	d = (t_parser *)list->content;
 	if (!ft_strcmp(d->cmd[0], "echo"))
-		return (1);
+	 	return (1);
 	else if (!ft_strcmp(d->cmd[0], "cd"))
+		return (1);
+	else if (!ft_strcmp(d->cmd[0], "exit"))
 		return (1);
 	else if (!ft_strcmp(d->cmd[0], "pwd"))
 		return (1);
@@ -29,9 +43,8 @@ int	check_builtin(t_list *list)
 		return (1);
 	else if (!ft_strcmp(d->cmd[0], "env"))
 		return (1);
-	else if (!ft_strcmp(d->cmd[0], "exit"))
-		return (1);
 	return (0);
+
 }
 
 void	builtins(t_list *list)
@@ -42,7 +55,7 @@ void	builtins(t_list *list)
 	if (!ft_strcmp(d->cmd[0], "echo"))
 		ft_echo(d->cmd);
 	else if (!ft_strcmp(d->cmd[0], "cd"))
-		ft_cd(d->cmd);
+		 ft_cd(d->cmd);
 	else if (!ft_strcmp(d->cmd[0], "pwd"))
 		ft_pwd();
 	else if (!ft_strcmp(d->cmd[0], "export"))

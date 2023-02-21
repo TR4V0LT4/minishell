@@ -1,0 +1,56 @@
+Mmain	src/main.c	/^int	main(int ac, char **av, char **env)$/
+_switch	src/token.c	/^t_token	*_switch(t_lexer *lexer)$/
+add_path	src/execution_utils.c	/^char	*add_path(char *cmd)$/
+append_to_str	src/lexer.c	/^char	*append_to_str(char *str, char c)$/
+builtins	src/builtins.c	/^void	builtins(t_list *list)$/
+change_old	src/ft_cd.c	/^void	change_old(char *old)$/
+change_pwd	src/ft_cd.c	/^void	change_pwd(char *home)$/
+check_builtin	src/builtins.c	/^int	check_builtin(t_list *list)$/
+check_syntax	src/parser.c	/^int	check_syntax(t_list *tokens)$/
+deallocate	src/parser_utils.c	/^void deallocate(t_list *list)$/
+debug_print_token	src/parser_utils.c	/^void debug_print_token(t_token *token)$/
+env_to_tab	src/execution_utils.c	/^char	**env_to_tab(t_list *list)$/
+execute	src/exe.c	/^void	execute(t_list *cmds, char **env)$/
+expand	src/parser_utils.c	/^char	*expand(char *result, char *var_name)$/
+expanding	src/parser.c	/^char	*expanding(char *str)$/
+fill_command	src/parser.c	/^t_list	*fill_command(t_list *tokens)$/
+ft_cd	src/ft_cd.c	/^void	ft_cd(char **s)$/
+ft_echo	src/ft_echo.c	/^void	ft_echo(char **s)$/
+ft_env	src/builtins.c	/^void	ft_env(void)$/
+ft_exit	src/ft_exit.c	/^void	ft_exit(char **s)$/
+ft_export	src/ft_export.c	/^void	ft_export(char **var)$/
+ft_free	src/parser_utils.c	/^void	ft_free(char	**t)$/
+ft_pwd	src/builtins.c	/^void	ft_pwd(void)$/
+ft_unset	src/ft_unset.c	/^void	ft_unset(char **var)$/
+g_home	src/ft_cd.c	/^void	g_home(void)$/
+get_env	src/execution_utils.c	/^t_list	*get_env(char **env)$/
+get_env_size	src/execution_utils.c	/^size_t	get_env_size(char **env)$/
+get_new_env	src/main.c	/^char	*get_new_env(char *s)$/
+get_token	src/token.c	/^t_token	*get_token(t_lexer *lexer)$/
+get_var_name	src/parser_utils.c	/^char	*get_var_name(char *str)$/
+handler	src/parser_utils.c	/^void	handler()$/
+handler_heredoc	src/exe.c	/^void	handler_heredoc(int sig)$/
+heredoc	src/heredoc.c	/^int	heredoc(char *value, int flag)$/
+heredoc_signals	src/heredoc.c	/^void	heredoc_signals(int sig)$/
+init_content	src/parser.c	/^t_parser	*init_content(t_parser *content)$/
+init_lexer	src/lexer.c	/^void	init_lexer(t_lexer *lexer, char *src)$/
+init_token	src/token.c	/^t_token	*init_token(char *value, int type)$/
+istoken	src/token.c	/^int	istoken(char c)$/
+lexer	src/lexer.c	/^t_list	*lexer(char *src)$/
+lexer_next	src/lexer.c	/^void	lexer_next(t_lexer *lexer)$/
+not_number	src/ft_exit.c	/^void	not_number(void)$/
+one_parameter	src/ft_exit.c	/^void	one_parameter(char *s)$/
+par_number	src/ft_exit.c	/^int	par_number(char *s)$/
+parsing_quotes	src/quotes.c	/^t_list *parsing_quotes(t_list *tokens, int *flag)$/
+print_cmd	src/parser_utils.c	/^void print_cmd(t_list *list)$/
+print_export	src/ft_export.c	/^void	print_export(t_list *export, t_env *temp_var)/
+print_tokens	src/parser_utils.c	/^void print_tokens(t_list *list)$/
+quotes_checker	src/quotes.c	/^int	quotes_checker(char *str)$/
+realloc_cmd	src/parser_utils.c	/^char	**realloc_cmd(char **cmd, char *str)$/
+remove_line	src/ft_echo.c	/^int	remove_line(char *s)$/
+remove_quotes	src/quotes.c	/^char    *remove_quotes(char *str , int *heredoc_fl/
+s_malloc	src/execution_utils.c	/^void	*s_malloc(int size)$/
+size_par	src/builtins.c	/^int	size_par(char **s)$/
+skip_spaces	src/lexer.c	/^void	skip_spaces(t_lexer *lexer)$/
+start	src/exe.c	/^int	start(t_list *list)$/
+unset_utils	src/ft_unset.c	/^void	unset_utils(char **var, t_list *a, t_list *b,/

@@ -6,7 +6,7 @@
 /*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 22:10:00 by wlahyani          #+#    #+#             */
-/*   Updated: 2023/02/21 21:08:09 by wlahyani         ###   ########.fr       */
+/*   Updated: 2023/02/22 00:42:38 by wlahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/minishell.h"
@@ -38,6 +38,7 @@ char	*expanding(char *str)
 			if (str[i] == '?')
 			{
 				printf("%d\n", g_data.exit_status);
+			g_data.exit_status = 0; 
 				i++;
 			}
 			var_name = get_var_name(str + i);

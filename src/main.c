@@ -31,6 +31,7 @@ char	*get_new_env(char *s)
 
 int	main(int ac, char **av, char **env)
 {
+	g_data.exit_status = 0;
 	char	*str;
 	t_list	*tokens;
 	t_list	*cmd;
