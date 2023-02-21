@@ -91,6 +91,7 @@ void  print_tokens(t_list *list);
 void  print_cmd(t_list *list);
 char *expand(char *result, char *var_name);
 char *get_var_name(char *str);
+char    *expanding(char *str);
 
        //execution_utils.c//
 t_list  *get_env(char **env);

@@ -41,15 +41,11 @@ int	ft_atoi(const char *str, long long *b)
 	result = 0;
 	while (str[i] && str[i] >= '0' && str[i] <= '9')
 	{
-		printf("here\n");
 		result = (result * 10) + (str[i] - '0');
-		// if (result >= 922337203685477580)
-		// {
-			if (sign > 0 && (__LONG_LONG_MAX__) < result)
+		if (sign > 0 && (__LONG_LONG_MAX__) < result)
+			return (0);
+		else if (sign < 0 && (unsigned long long)__LONG_LONG_MAX__ + 1 < result)
 				return (0);
-			else if (sign < 0 && (unsigned long long)__LONG_LONG_MAX__ + 1 < result)
-				return (0);
-		//}
 		i++;
 	}
 	(*b) = result * sign;

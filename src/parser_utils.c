@@ -22,7 +22,7 @@ char *get_var_name(char *str)
 	char *name;
 
 	name = NULL;
-	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_') )
+	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_' || str[i] == '?') )
 	{
 		name = append_to_str(name, str[i]);
 		i++;
@@ -37,7 +37,7 @@ char *expand(char *result, char *var_name)
 	char *value;
 	char *tmp;
 
-	value  = getenv(var_name);
+	value  = get_new_env(var_name);
 	tmp = result;
 	result = ft_strjoin(result, value);
 	if (result == NULL)

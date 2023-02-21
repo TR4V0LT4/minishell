@@ -47,6 +47,7 @@ int	main(int ac, char **av, char **env)
 		cmd = fill_command(tokens);
 		start(cmd);
 		deallocate(tokens);
+
 		free(str);
 	}
 	return (0);

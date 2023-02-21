@@ -6,7 +6,7 @@
 /*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 22:10:00 by wlahyani          #+#    #+#             */
-/*   Updated: 2023/02/21 05:27:20 by skhaliff         ###   ########.fr       */
+/*   Updated: 2023/02/20 16:45:33 by skhaliff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,31 @@ t_parser	*init_content(t_parser *content)
 void heredoc_signals()
 {
 	exit(0);
+}
+char    *expanding(char *str)
+{
+	int             i;
+    char *string;
+    char *var_name;
+	
+	i = 0;
+    string = NULL;
+    while (str[i])
+    {
+        if (str[i] == '$')
+        {
+            //	if (str[i + 1] == '?')
+            //    printf("%d\n", g_data.exit_status);
+        	var_name = get_var_name(str + i);
+            string = expand(string, var_name);
+            i += ft_strlen(var_name);
+            free(var_name);
+        }
+		else
+			string = append_to_str(string, str[i]);
+        i++;
+    }
+    return (string);
 }
 int	heredoc(char *value, int flag)
 {
@@ -45,13 +70,9 @@ int	heredoc(char *value, int flag)
 
 		while (1)
 		{
-			//if(*str == '\0')
-			//exit(0);
-			// if(str == NULL)
-			// 	exit(0);
 			str = readline(">");
-			//printf("%s\n", str);
-			//str = string_parser(str);
+			if(!flag)
+				str = expanding(str);
 			if (ft_strcmp(str, value) )
 			{
 				write(fd, str, ft_strlen(str));
@@ -117,8 +138,8 @@ char    *remove_quotes(char *str , int *heredoc_flag, int prev_type)
                 {
                         if (str[i] == '$')
                         {
-                                //if (str[i + 1] == '?')
-                                    //    printf("%d\n", g_data.exit_status);
+                                if (str[i + 1] == '?')
+                                        printf("%d\n", g_data.exit_status);
                                 var_name = get_var_name(str + i);
                                 string = expand(string, var_name);
                                 i += ft_strlen(var_name);
@@ -155,6 +176,7 @@ t_list	*fill_command(t_list *tokens)
 	t_token		*curr;
 	t_parser	*tmp;
 	int flag = 0;
+
 
 	tmp = NULL;
 	cmd_list = NULL;
