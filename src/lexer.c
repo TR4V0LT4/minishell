@@ -6,10 +6,9 @@
 /*   By: wlahyani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 22:02:36 by wlahyani          #+#    #+#             */
-/*   Updated: 2023/02/02 22:09:42 by wlahyani         ###   ########.fr       */
+/*   Updated: 2023/02/21 19:36:16 by wlahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../include/minishell.h"
 
 void	init_lexer(t_lexer *lexer, char *src)

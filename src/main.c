@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wlahyani <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/21 19:34:49 by wlahyani          #+#    #+#             */
+/*   Updated: 2023/02/21 19:35:37 by wlahyani         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "../include/minishell.h"
 
 char	*get_new_env(char *s)
@@ -31,8 +42,8 @@ int	main(int ac, char **av, char **env)
 	g_data.index = 0;
 	while (1)
 	{
-	signal(SIGINT, handler);
-	signal(SIGQUIT, SIG_IGN);
+		signal(SIGINT, handler);
+		signal(SIGQUIT, SIG_IGN);
 		str = readline("➜ minishell ");
 		if (str == NULL)
 			exit(0);
@@ -48,7 +59,6 @@ int	main(int ac, char **av, char **env)
 		cmd = fill_command(tokens);
 		start(cmd);
 		deallocate(tokens);
-
 		free(str);
 	}
 	return (0);

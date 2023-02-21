@@ -1,12 +1,24 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wlahyani <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/21 22:16:54 by wlahyani          #+#    #+#             */
+/*   Updated: 2023/02/21 22:18:16 by wlahyani         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "../include/minishell.h"
-void handler()
+
+void	handler()
 {
-    write (1, "\n", 1);
-    rl_on_new_line();
-   rl_replace_line("", 0);
-    rl_redisplay();
+	write (1, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }
+
 void	ft_free(char	**t)
 {
 	int	i;
@@ -16,15 +28,18 @@ void	ft_free(char	**t)
 		free (t[i]);
 }
 
-char *get_var_name(char *str)
+char	*get_var_name(char *str)
 {
-	int i = 1;
+	int i;
 	char *name;
 
+	i = 0;
 	name = NULL;
-	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_' || str[i] == '?') )
+	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_' ) )
 	{
 		name = append_to_str(name, str[i]);
+		if (i == 1 && str[i] == '?')
+			break;
 		i++;
 	}
 	if (!name)
@@ -32,12 +47,12 @@ char *get_var_name(char *str)
 	return (name);
 }
 
-char *expand(char *result, char *var_name)
+char	*expand(char *result, char *var_name)
 {
 	char *value;
 	char *tmp;
 
-	if(!ft_strcmp(var_name ,"?"))
+	if (!ft_strcmp(var_name, "?"))
 		value = ft_itoa(g_data.exit_status);
 	else
 		value  = get_new_env(var_name);

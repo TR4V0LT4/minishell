@@ -13,7 +13,7 @@
 NAME = minishell
 
 SRC = src/main.c src/lexer.c src/token.c src/parser.c  src/parser_utils.c src/exe.c src/builtins.c src/execution_utils.c src/ft_cd.c src/ft_exit.c src/ft_echo.c \
-src/ft_export.c src/ft_unset.c
+src/ft_export.c src/ft_unset.c src/heredoc.c src/quotes.c
 
 
 OBJ = ${SRC:%.c=%.o}

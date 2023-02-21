@@ -6,7 +6,7 @@
 /*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 23:48:31 by skhaliff          #+#    #+#             */
-/*   Updated: 2023/02/19 16:27:09 by skhaliff         ###   ########.fr       */
+/*   Updated: 2023/02/21 22:04:27 by wlahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	ft_echo(char **s)
 {
 	int	i;
 	int	remove_new_line;
-
 
 	i = 1;
 	remove_new_line = 0;

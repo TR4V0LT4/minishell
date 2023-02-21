@@ -6,7 +6,7 @@
 /*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 13:46:32 by skhaliff          #+#    #+#             */
-/*   Updated: 2023/02/21 11:07:00 by skhaliff         ###   ########.fr       */
+/*   Updated: 2023/02/21 22:05:42 by wlahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,10 @@ void	not_number(void)
 
 void	one_parameter(char *s)
 {
-	int a;
-	long long	*b = NULL;
+	int			a;
+	long long	*b;
 
+	b = NULL;
 	if (!par_number(s))
 		not_number();
 	else

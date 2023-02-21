@@ -100,7 +100,7 @@ t_list  *get_env(char **env);
 size_t  get_env_size(char **env);
 char    *add_path(char *cmd);
 char    **env_to_tab(t_list *list);
-
+void    *s_malloc(int size);
 
       //builtins//
 void	builtins(t_list *list);
@@ -123,6 +123,9 @@ void  execute(t_list *cmds , char **env);
 void handler();
 void rl_replace_line (char *, int);
 
-void *s_malloc(int size);
+      //heredoc//
+int	heredoc(char *value, int flag);
+
+
 
 #endif

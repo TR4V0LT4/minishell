@@ -85,3 +85,6 @@ adsvdv=(null)
 ➜ minishell export test==
 bash-3.2$ export
 unset 
+
+➜ minishell exit 288
+[1]    18412 segmentation fault  ./minishell
