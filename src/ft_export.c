@@ -6,7 +6,7 @@
 /*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 23:47:49 by skhaliff          #+#    #+#             */
-/*   Updated: 2023/02/19 00:04:21 by skhaliff         ###   ########.fr       */
+/*   Updated: 2023/02/21 06:59:57 by skhaliff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	print_export(t_list *export, t_env *temp_var)
 	while (export)
 	{
 		temp_var = (t_env *)(export->content);
-		printf("%s=%s\n", temp_var->key, temp_var->value);
+		printf("declare -x %s=%s\n", temp_var->key, temp_var->value);
 		export = export->next;
 	}
 }

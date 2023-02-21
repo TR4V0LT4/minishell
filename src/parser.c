@@ -6,7 +6,7 @@
 /*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 22:10:00 by wlahyani          #+#    #+#             */
-/*   Updated: 2023/02/20 16:45:33 by skhaliff         ###   ########.fr       */
+/*   Updated: 2023/02/21 05:27:20 by skhaliff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,6 @@ t_list	*fill_command(t_list *tokens)
 	t_token		*curr;
 	t_parser	*tmp;
 	int flag = 0;
-
 
 	tmp = NULL;
 	cmd_list = NULL;

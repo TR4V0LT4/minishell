@@ -3,13 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wlahyani <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 10:32:14 by wlahyani          #+#    #+#             */
-/*   Updated: 2021/12/07 03:51:16 by wlahyani         ###   ########.fr       */
+/*   Updated: 2023/02/21 11:00:24 by skhaliff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
+#include <stdio.h>
 
 static int	ft_sign(const char *str, int *i)
 {	
@@ -25,10 +27,10 @@ static int	ft_sign(const char *str, int *i)
 	return (sign);
 }
 
-int	ft_atoi(const char *str)
+int	ft_atoi(const char *str, long long *b)
 {
 	int					sign;
-	unsigned long long	result;
+	unsigned long	long	result;
 	int					i;
 
 	i = 0;
@@ -39,14 +41,17 @@ int	ft_atoi(const char *str)
 	result = 0;
 	while (str[i] && str[i] >= '0' && str[i] <= '9')
 	{
+		printf("here\n");
 		result = (result * 10) + (str[i] - '0');
-		if (result > 9223372036854775807)
-		{
-			if (sign == 1)
-				return (-1);
-			return (0);
-		}
+		// if (result >= 922337203685477580)
+		// {
+			if (sign > 0 && (__LONG_LONG_MAX__) < result)
+				return (0);
+			else if (sign < 0 && (unsigned long long)__LONG_LONG_MAX__ + 1 < result)
+				return (0);
+		//}
 		i++;
 	}
-	return (result * sign);
+	(*b) = result * sign;
+	return (1);
 }

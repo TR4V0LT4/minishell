@@ -6,7 +6,7 @@
 /*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 13:46:32 by skhaliff          #+#    #+#             */
-/*   Updated: 2023/02/19 15:23:17 by skhaliff         ###   ########.fr       */
+/*   Updated: 2023/02/21 11:07:00 by skhaliff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	par_number(char *s)
 	int	i;
 
 	i = 0;
+	if (s[i] == '-' || s[i] == '+')
+		i++;
 	while (s[i])
 	{
 		if (!ft_isdigit(s[i]))
@@ -35,13 +37,22 @@ void	not_number(void)
 
 void	one_parameter(char *s)
 {
+	int a;
+	long long	*b = NULL;
+
 	if (!par_number(s))
 		not_number();
 	else
 	{
-		g_data.exit_status = ft_atoi(s);
-		write(1, "exit\n", 6);
-		exit (g_data.exit_status % 256);
+		a = ft_atoi(s, b);
+		if (a == 0)
+			not_number();
+		else
+		{
+			g_data.exit_status = a;
+			write(1, "exit\n", 6);
+			exit (g_data.exit_status % 256);
+		}
 	}
 }
 
