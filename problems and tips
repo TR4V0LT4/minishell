@@ -1,5 +1,8 @@
     //problems//
-exit (max long long)
-exit status
+==>exit (max long long)
+==>exit status
+==>tabs and spaces : command not found / error 
+
     //tips//
 remove the ctrl+c output ^C = stty -echoctl 
+

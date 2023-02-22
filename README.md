@@ -49,27 +49,16 @@ cat: -la: No such file or directory
 echo oui | echo non | echo something | grep something ==> oui expect  something
 
 
-=> expand inside heredoc
+=> expand inside heredoc ✅
 => signlas          ✅
-=> exit status
+➜ minishell exit 288 ✅
+[1]    18412 segmentation fault  ./minishell ✅
 => multiple pipes   ✅
+=> heredoc  parse delimeter ✅
+=> $? ✅
+=> cat < l ✅
 
-=> string parser "\0"
-=> heredoc  parse delimeter
-=> $?
-=> cat < l
-
-==>➜ minishell cat <<$"USER"
->USER
->$USER
->$"USER"
->wlahyani
-
-=> ➜ minishell cat << g
->fasd
-> ctrl + d segv
-
-=>cd????
+=> string parser "\0" 
 
 =>export
 =>env
@@ -86,5 +75,6 @@ adsvdv=(null)
 bash-3.2$ export
 unset 
 
-➜ minishell exit 288
-[1]    18412 segmentation fault  ./minishell
+
+
+=> exit status

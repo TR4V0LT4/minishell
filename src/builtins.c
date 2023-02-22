@@ -53,7 +53,7 @@ void	builtins(t_list *list)
 
 	d = (t_parser *)list->content;
 	if (!ft_strcmp(d->cmd[0], "echo"))
-		ft_echo(d->cmd);
+		ft_echo(d->cmd , d->out_file);
 	else if (!ft_strcmp(d->cmd[0], "cd"))
 		 ft_cd(d->cmd);
 	else if (!ft_strcmp(d->cmd[0], "pwd"))

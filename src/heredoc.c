@@ -56,7 +56,6 @@ int	heredoc(char *delimiter, int flag)
 	int			fd;
 
 	str = NULL;
-	printf("%s\n", delimiter);
 	path = ft_strjoin("/tmp/", "minishell");
 	fd = open(path, O_CREAT | O_WRONLY, 0600);
 	pid = fork();
@@ -67,7 +66,6 @@ int	heredoc(char *delimiter, int flag)
 		while (1)
 		{
 			str = readline(">");
-			printf(" str = [%s] delimiter = %s\n" , str, delimiter);
 			if (ft_strcmp(str, delimiter))
 			{
 				if (!flag)

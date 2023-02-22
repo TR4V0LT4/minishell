@@ -30,7 +30,7 @@ int	remove_line(char *s)
 	return (0);
 }
 
-void	ft_echo(char **s)
+void	ft_echo(char **s, int fd)
 {
 	int	i;
 	int	remove_new_line;
@@ -46,9 +46,13 @@ void	ft_echo(char **s)
 		}
 		if (!s[i])
 			return ;
-		printf("%s", s[i]);
-		if (s[i + 1] != NULL)
-			printf(" ");
+		
+		ft_putstr_fd(s[i],fd);
+		write(fd, "\n", 1);
+	//	ft_putstr_fd("\0", fd);
+		//printf("%s", s[i]);
+		//if (s[i + 1] != NULL)
+	//		printf(" ");
 		i++;
 	}
 	if (!remove_new_line)

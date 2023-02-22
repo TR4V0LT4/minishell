@@ -108,7 +108,7 @@ void	ft_unset(char **var);
 void	ft_env(void);
 void	ft_export(char **var);
 void	ft_pwd(void);
-void	ft_echo(char **s);
+void	ft_echo(char **s, int fd);
 void	ft_exit(char **s);
 void	ft_cd(char **s);
 int	size_par(char **s);

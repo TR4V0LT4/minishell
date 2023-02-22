@@ -16,19 +16,6 @@ void	handler_heredoc(int sig)
 	(void)sig;
 	exit(0);
 }
-void rerederacting(int input, int output)
-{
-			if (input != 0)
-			{
-				dup2(STDIN_FILENO, input);
-				close(input);
-			}
-			if (output != 1)
-			{
-				dup2(STDOUT_FILENO ,output);
-				close(output);
-			}
-}
 void rederacting(int input, int output)
 {
 			if (input != 0)
@@ -125,7 +112,9 @@ int	start(t_list *list)
 
 	cmd =  (t_parser *)list->content;
 	if (ft_lstsize(list) == 1 && check_builtin(list))
+	{
 		builtins(list);
+	}
 	else
 	{
 		tab_env = env_to_tab(g_data.env);
