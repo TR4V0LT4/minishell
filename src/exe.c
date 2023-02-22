@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   exe.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wlahyani <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:23:41 by wlahyani          #+#    #+#             */
-/*   Updated: 2023/02/21 21:19:38 by wlahyani         ###   ########.fr       */
+/*   Updated: 2023/02/23 00:45:56 by skhaliff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 void	handler_heredoc(int sig)
@@ -16,19 +17,21 @@ void	handler_heredoc(int sig)
 	(void)sig;
 	exit(0);
 }
-void rederacting(int input, int output)
+
+void	rederacting(int input, int output)
 {
-			if (input != 0)
-			{
-				dup2(input, STDIN_FILENO);
-				close(input);
-			}
-			if (output != 1)
-			{
-				dup2(output, STDOUT_FILENO);
-				close(output);
-			}
+	if (input != 0)
+	{
+		dup2(input, STDIN_FILENO);
+		close(input);
+	}
+	if (output != 1)
+	{
+		dup2(output, STDOUT_FILENO);
+		close(output);
+	}
 }
+
 void	execute(t_list *cmds, char **env)
 {
 	int			pipe1[2] = {-1 , -1};
@@ -66,7 +69,7 @@ void	execute(t_list *cmds, char **env)
 				dup2(buffer[0], 0);
 				close(buffer[0]);
 			}
-			rederacting(tmp->in_file,tmp->out_file);
+			rederacting(tmp->in_file, tmp->out_file);
 			if (check_builtin(cmds))
 			{
 				builtins(cmds);
@@ -105,12 +108,11 @@ void	execute(t_list *cmds, char **env)
 
 int	start(t_list *list)
 {
-	char	**tab_env;
+	char		**tab_env;
 	t_parser	*cmd;
 
 	cmd = (t_parser *) s_malloc(sizeof(t_parser));
-
-	cmd =  (t_parser *)list->content;
+	cmd = (t_parser *)list->content;
 	if (ft_lstsize(list) == 1 && check_builtin(list))
 	{
 		builtins(list);

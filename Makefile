@@ -6,7 +6,7 @@
 #    By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/26 20:23:30 by wlahyani          #+#    #+#              #
-#    Updated: 2023/02/21 23:27:40 by wlahyani         ###   ########.fr        #
+#    Updated: 2023/02/23 00:05:58 by skhaliff         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ OBJ = ${SRC:%.c=%.o}
 
 FLAGS =  -Wall -Wextra -Werror  #-fsanitize=address
 
-READLINE =  -lreadline -L /Users/wlahyani/homebrew/Cellar/readline/8.2.1/lib  -I /Users/wlahyani/homebrew/Cellar/readline/8.2.1/include 
+READLINE =  -lreadline -L /Users/skhaliff/.brew/Cellar/readline/8.2.1/lib  -I /Users/skhaliff/.brew/Cellar/readline/8.2.1/include 
 
 %.o:%.c
 	gcc $(FLAGS)  -c $< -o $@

@@ -6,7 +6,7 @@
 /*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 10:32:14 by wlahyani          #+#    #+#             */
-/*   Updated: 2023/02/21 23:18:50 by wlahyani         ###   ########.fr       */
+/*   Updated: 2023/02/23 00:48:15 by skhaliff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	ft_sign(const char *str, int *i)
 int	ft_atoi(const char *str, long long *b)
 {
 	int					sign;
-	unsigned long	long	result;
+	unsigned long long	result;
 	int					i;
 
 	i = 0;
@@ -47,7 +47,7 @@ int	ft_atoi(const char *str, long long *b)
 		if (sign > 0 && (__LONG_LONG_MAX__) < result)
 			return (0);
 		else if (sign < 0 && (unsigned long long)__LONG_LONG_MAX__ + 1 < result)
-				return (0);
+			return (0);
 		i++;
 	}
 	(*b) = result * sign;

@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wlahyani <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:34:49 by wlahyani          #+#    #+#             */
-/*   Updated: 2023/02/21 19:35:37 by wlahyani         ###   ########.fr       */
+/*   Updated: 2023/02/23 00:45:02 by skhaliff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../include/minishell.h"
+
 
 char	*get_new_env(char *s)
 {
@@ -31,12 +31,11 @@ char	*get_new_env(char *s)
 
 int	main(int ac, char **av, char **env)
 {
-	g_data.exit_status = 0;
 	char	*str;
 	t_list	*tokens;
 	t_list	*cmd;
 
-
+	g_data.exit_status = 0;
 	g_data.env = get_env(env);
 	cmd = NULL;
 	(void)ac;
@@ -59,10 +58,9 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		}
 		cmd = fill_command(tokens);
-		if(start(cmd))
-			continue;
+		if (start(cmd))
+			continue ;
 		deallocate(tokens);
-	
 		free(str);
 	}
 	return (0);

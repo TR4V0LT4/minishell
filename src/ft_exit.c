@@ -6,7 +6,7 @@
 /*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 13:46:32 by skhaliff          #+#    #+#             */
-/*   Updated: 2023/02/21 23:38:41 by wlahyani         ###   ########.fr       */
+/*   Updated: 2023/02/23 00:24:24 by skhaliff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	ft_exit(char **s)
 	size = size_par(s);
 	if (size == 1)
 	{
-		//write(1, "exit\n", 6);
+		write(1, "exit\n", 6);
 		exit(g_data.exit_status);
 	}
 	else if (size == 2)

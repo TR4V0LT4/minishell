@@ -6,7 +6,7 @@
 /*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 23:48:31 by skhaliff          #+#    #+#             */
-/*   Updated: 2023/02/21 22:04:27 by wlahyani         ###   ########.fr       */
+/*   Updated: 2023/02/23 00:09:13 by skhaliff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,12 @@ int	remove_line(char *s)
 	while (s[i])
 	{
 		if (s[i] == 'n')
-			return (1);
-		i++;
+			i++;
+		else
+			break ;
 	}
+	if (s[i] == ' ' || s[i] == '\0')
+		return (1);
 	return (0);
 }
 
@@ -46,13 +49,9 @@ void	ft_echo(char **s, int fd)
 		}
 		if (!s[i])
 			return ;
-		
-		ft_putstr_fd(s[i],fd);
-		write(fd, "\n", 1);
-	//	ft_putstr_fd("\0", fd);
-		//printf("%s", s[i]);
-		//if (s[i + 1] != NULL)
-	//		printf(" ");
+		ft_putstr_fd(s[i], fd);
+		if (s[i + 1] != NULL)
+			ft_putstr_fd(" ", fd);
 		i++;
 	}
 	if (!remove_new_line)

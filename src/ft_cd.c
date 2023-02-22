@@ -6,7 +6,7 @@
 /*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 13:46:16 by skhaliff          #+#    #+#             */
-/*   Updated: 2023/02/22 00:00:18 by wlahyani         ###   ########.fr       */
+/*   Updated: 2023/02/23 00:23:59 by skhaliff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ void	ft_cd(char **s)
 	int		i;
 	char	*p;
 	char	*old;
-
 
 	g_data.exit_status = 0;
 	i = size_par(s);
