@@ -40,7 +40,7 @@ t_env * get_key_value(char *str)
 	return (key_value);
 }
 
-void replace_value(char *key, value, t_list *env);
+//void replace_value(char *key, value, t_list *env);
 
 void	ft_export(char **var)
 {

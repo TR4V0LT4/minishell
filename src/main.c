@@ -36,6 +36,7 @@ int	main(int ac, char **av, char **env)
 	t_list	*tokens;
 	t_list	*cmd;
 
+
 	g_data.env = get_env(env);
 	cmd = NULL;
 	(void)ac;
@@ -58,8 +59,10 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		}
 		cmd = fill_command(tokens);
-		start(cmd);
+		if(start(cmd))
+			continue;
 		deallocate(tokens);
+	
 		free(str);
 	}
 	return (0);

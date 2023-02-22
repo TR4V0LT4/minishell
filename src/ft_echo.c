@@ -44,6 +44,8 @@ void	ft_echo(char **s)
 			remove_new_line = 1;
 			i++;
 		}
+		if (!s[i])
+			return ;
 		printf("%s", s[i]);
 		if (s[i + 1] != NULL)
 			printf(" ");

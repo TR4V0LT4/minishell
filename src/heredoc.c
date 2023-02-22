@@ -17,7 +17,38 @@ void	heredoc_signals(int sig)
 	exit(0);
 }
 
-int	heredoc(char *value, int flag)
+char	*expanding(char *str)
+{
+	int		i;
+	char	*string;
+	char	*var_name;
+
+	i = 0;
+	string = NULL;
+	while (str[i])
+	{
+		if (str[i] == '$')
+		{
+			i++;
+			if (str[i] == '?')
+			{
+				printf("%d\n", g_data.exit_status);
+			g_data.exit_status = 0; 
+				i++;
+			}
+			var_name = get_var_name(str + i);
+			string = expand(string, var_name);
+			i += ft_strlen(var_name);
+			free(var_name);
+		}
+		else
+			string = append_to_str(string, str[i]);
+		i++;
+	}
+	return (string);
+}
+
+int	heredoc(char *delimiter, int flag)
 {
 	char		*str;
 	char		*path;
@@ -25,6 +56,7 @@ int	heredoc(char *value, int flag)
 	int			fd;
 
 	str = NULL;
+	printf("%s\n", delimiter);
 	path = ft_strjoin("/tmp/", "minishell");
 	fd = open(path, O_CREAT | O_WRONLY, 0600);
 	pid = fork();
@@ -35,10 +67,11 @@ int	heredoc(char *value, int flag)
 		while (1)
 		{
 			str = readline(">");
-			if (!flag)
-				str = expanding(str);
-			if (ft_strcmp(str, value))
+			printf(" str = [%s] delimiter = %s\n" , str, delimiter);
+			if (ft_strcmp(str, delimiter))
 			{
+				if (!flag)
+					str = expanding(str);
 				write(fd, str, ft_strlen(str));
 				write(fd, "\n", 1);
 			}

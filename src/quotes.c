@@ -14,13 +14,14 @@ char    *remove_quotes(char *str , int *heredoc_flag, int prev_type)
             i++;
             while (str[i] && str[i] != '\"')
             {
-        		if (str[i] == '$')
+        		if (str[i] == '$' && prev_type != TOKEN_HEREDOC )
     			{
 					if(str[i+1] == '?')
 						var_name = ft_strdup("?");
-					else
-               			var_name = get_var_name(str+i );
-  					string = expand(string, var_name);
+					else 
+               			var_name = get_var_name(str + i + 1 );
+  					
+					string = expand(string, var_name);
                     i += ft_strlen(var_name);
                 	free(var_name);
 				}
@@ -46,7 +47,7 @@ char    *remove_quotes(char *str , int *heredoc_flag, int prev_type)
         }
         else
         {
-            if (str[i] == '$')
+            if (str[i] == '$' && prev_type != TOKEN_HEREDOC)
             {
 				if(str[i+1] == '?')
 					var_name = ft_strdup("?");
@@ -61,6 +62,8 @@ char    *remove_quotes(char *str , int *heredoc_flag, int prev_type)
             i++;
         }
     }
+	if(!string)
+		return("\0");
     return (string);
 }
 int	quotes_checker(char *str)
@@ -100,15 +103,15 @@ t_list *parsing_quotes(t_list *tokens, int *flag)
 {
 	t_list *tmp;
 	t_token *curr;
-	int t = 0;
+	int previous = 0;
 
 	tmp = tokens;
 	curr = (t_token *)tokens->content;
 	while(tmp && curr->type != TOKEN_EOF )
 	{
 		if(curr->type == TOKEN_STRING)
-			curr->value = remove_quotes(curr->value ,flag, t);
-		t = curr->type;	
+			curr->value = remove_quotes(curr->value ,flag, previous);
+		previous = curr->type;	
 		tmp = tmp->next;
 		curr = (t_token *)tmp->content;
 	}

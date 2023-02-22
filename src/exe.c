@@ -16,7 +16,32 @@ void	handler_heredoc(int sig)
 	(void)sig;
 	exit(0);
 }
-
+void rerederacting(int input, int output)
+{
+			if (input != 0)
+			{
+				dup2(STDIN_FILENO, input);
+				close(input);
+			}
+			if (output != 1)
+			{
+				dup2(STDOUT_FILENO ,output);
+				close(output);
+			}
+}
+void rederacting(int input, int output)
+{
+			if (input != 0)
+			{
+				dup2(input, STDIN_FILENO);
+				close(input);
+			}
+			if (output != 1)
+			{
+				dup2(output, STDOUT_FILENO);
+				close(output);
+			}
+}
 void	execute(t_list *cmds, char **env)
 {
 	int			pipe1[2] = {-1 , -1};
@@ -54,16 +79,7 @@ void	execute(t_list *cmds, char **env)
 				dup2(buffer[0], 0);
 				close(buffer[0]);
 			}
-			if (tmp->in_file != 0)
-			{
-				dup2(tmp->in_file, STDIN_FILENO);
-				close(tmp->in_file);
-			}
-			if (tmp->out_file != 1)
-			{
-				dup2(tmp->out_file, STDOUT_FILENO);
-				close(tmp->out_file);
-			}
+			rederacting(tmp->in_file,tmp->out_file);
 			if (check_builtin(cmds))
 			{
 				builtins(cmds);
@@ -103,8 +119,12 @@ void	execute(t_list *cmds, char **env)
 int	start(t_list *list)
 {
 	char	**tab_env;
+	t_parser	*cmd;
 
-	if (ft_lstsize(list) == 1 && check_builtin(list) )
+	cmd = (t_parser *) s_malloc(sizeof(t_parser));
+
+	cmd =  (t_parser *)list->content;
+	if (ft_lstsize(list) == 1 && check_builtin(list))
 		builtins(list);
 	else
 	{

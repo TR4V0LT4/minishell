@@ -22,37 +22,6 @@ t_parser	*init_content(t_parser *content)
 	return (content);
 }
 
-char	*expanding(char *str)
-{
-	int		i;
-	char	*string;
-	char	*var_name;
-
-	i = 0;
-	string = NULL;
-	while (str[i])
-	{
-		if (str[i] == '$')
-		{
-			i++;
-			if (str[i] == '?')
-			{
-				printf("%d\n", g_data.exit_status);
-			g_data.exit_status = 0; 
-				i++;
-			}
-			var_name = get_var_name(str + i);
-			string = expand(string, var_name);
-			i += ft_strlen(var_name);
-			free(var_name);
-		}
-		else
-			string = append_to_str(string, str[i]);
-		i++;
-	}
-	return (string);
-}
-
 t_list	*fill_command(t_list *tokens)
 {
 	t_list		*cmd_list;

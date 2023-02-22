@@ -1,2 +1,5 @@
+    //problems//
 exit (max long long)
 exit status
+    //tips//
+remove the ctrl+c output ^C = stty -echoctl 
