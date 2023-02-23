@@ -6,7 +6,7 @@
 /*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 22:06:27 by wlahyani          #+#    #+#             */
-/*   Updated: 2023/02/23 00:24:40 by skhaliff         ###   ########.fr       */
+/*   Updated: 2023/02/23 17:51:54 by wlahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/minishell.h"
@@ -15,6 +15,13 @@ void	heredoc_signals(int sig)
 {
 	(void)sig;
 	exit(0);
+}
+
+void	print_exit_status(int *i)
+{
+	printf("%d\n", g_data.exit_status);
+	g_data.exit_status = 0;
+	(*i)++;
 }
 
 char	*expanding(char *str)
@@ -31,11 +38,7 @@ char	*expanding(char *str)
 		{
 			i++;
 			if (str[i] == '?')
-			{
-				printf("%d\n", g_data.exit_status);
-				g_data.exit_status = 0;
-				i++;
-			}
+				print_exit_status(&i);
 			var_name = get_var_name(str + i);
 			string = expand(string, var_name);
 			i += ft_strlen(var_name);
@@ -48,38 +51,42 @@ char	*expanding(char *str)
 	return (string);
 }
 
-int	heredoc(char *delimiter, int flag)
+void	child_process(int fd, int flag, char *delimiter)
 {
-	char		*str;
-	char		*path;
-	int			pid;
-	int			fd;
+	char	*str;
 
 	str = NULL;
+	signal(SIGINT, heredoc_signals);
+	signal(SIGQUIT, SIG_IGN);
+	while (1)
+	{
+		str = readline(">");
+		if (ft_strcmp(str, delimiter))
+		{
+			if (!flag)
+				str = expanding(str);
+			write(fd, str, ft_strlen(str));
+			write(fd, "\n", 1);
+		}
+		else
+			break ;
+	}
+	write(fd, "\0", 1);
+	close(fd);
+	exit(0);
+}
+
+int	heredoc(char *delimiter, int flag)
+{
+	char		*path;
+	int			fd;
+	int			pid;
+
 	path = ft_strjoin("/tmp/", "minishell");
 	fd = open(path, O_CREAT | O_WRONLY, 0600);
 	pid = fork();
 	if (pid == 0)
-	{
-		signal(SIGINT, heredoc_signals);
-		signal(SIGQUIT, SIG_IGN);
-		while (1)
-		{
-			str = readline(">");
-			if (ft_strcmp(str, delimiter))
-			{
-				if (!flag)
-					str = expanding(str);
-				write(fd, str, ft_strlen(str));
-				write(fd, "\n", 1);
-			}
-			else
-				break ;
-		}
-		write(fd, "\0", 1);	
-		close(fd);
-		exit(0);
-	}
+		child_process(fd, flag, delimiter);
 	else
 		wait(NULL);
 	close(fd);

@@ -6,7 +6,7 @@
 /*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 13:46:32 by skhaliff          #+#    #+#             */
-/*   Updated: 2023/02/23 00:24:24 by skhaliff         ###   ########.fr       */
+/*   Updated: 2023/02/23 17:11:50 by wlahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	one_parameter(char *s)
 	long long	*b;
 
 	b = malloc(sizeof(long long ));
-	//b = NULL;
 	if (!par_number(s))
 		not_number();
 	else

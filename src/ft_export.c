@@ -9,7 +9,6 @@
 /*   Updated: 2023/02/23 00:18:45 by skhaliff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../include/minishell.h"
 
 void	print_export(t_list *export)
@@ -33,8 +32,6 @@ t_env	*get_key_value(char *str)
 	char	*equal;
 
 	equal = ft_strchr(str, '=');
-	// if (equal == NULL)
-	// 	return (NULL);
 	if (equal != NULL)
 		*equal = '\0';
 	key_value = s_malloc(sizeof(t_env));
@@ -53,9 +50,12 @@ int	replace_value(char *key, char *value, t_list *env)
 	while (env)
 	{
 		s = (t_env *) env->content;
-		if (!ft_strcmp(key, s->key) && (s->value != NULL))
+		if (!ft_strcmp(key, s->key))
 		{
-			s->value = value;
+			if (!value)
+				return (2);
+			else
+				s->value = value;
 			return (1);
 		}
 		env = env->next;
@@ -63,16 +63,20 @@ int	replace_value(char *key, char *value, t_list *env)
 	return (0);
 }
 
-int	check_key(char *key, t_list *env)
+int	check_key(char *key)
 {
-	t_env	*s;
+	int	i;
 
-	while (env)
+	i = 0;
+	if (!ft_isalpha(key[0]) && key[0] != '_')
+		return (1);
+	else
+		i++;
+	while (key[i])
 	{
-		s = (t_env *) env->content;
-		if (!ft_strcmp(key, s->key))
+		if (!ft_isalnum(key[i]) && key[i] != '_')
 			return (1);
-		env = env->next;
+		i++;
 	}
 	return (0);
 }
@@ -97,15 +101,10 @@ void	ft_export(char **var)
 		while (++j < i)
 		{
 			temp_var = get_key_value(var[j]);
-			// printf("||| %s\n", temp_var->key);
-			// printf("||| %s\n", temp_var->value);
-			// if (temp_var == NULL)
-			// 	continue ;
 			s = replace_value(temp_var->key, temp_var->value, export);
-			int b = check_key(temp_var->key, export);
-			if (!ft_isalpha(temp_var->key[0]) && temp_var->key[0] != '_')
+			if (check_key(temp_var->key))
 				printf("not a valid identifier\n");
-			if (s == 0 && b == 0)
+			else if (s == 0)
 				ft_lstadd_back(&export, ft_lstnew(temp_var));
 		}
 	}

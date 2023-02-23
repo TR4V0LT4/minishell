@@ -6,7 +6,7 @@
 /*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:34:49 by wlahyani          #+#    #+#             */
-/*   Updated: 2023/02/23 00:45:02 by skhaliff         ###   ########.fr       */
+/*   Updated: 2023/02/23 17:53:50 by wlahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/minishell.h"

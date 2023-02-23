@@ -6,7 +6,7 @@
 /*   By: wlahyani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 22:55:34 by wlahyani          #+#    #+#             */
-/*   Updated: 2023/02/21 21:17:07 by wlahyani         ###   ########.fr       */
+/*   Updated: 2023/02/23 16:20:30 by wlahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/minishell.h"
@@ -50,7 +50,16 @@ t_token	*get_token(t_lexer *lexer)
 		token = _switch(lexer);
 	return (token);
 }
+ int redirect(t_lexer *lexer)
+ {
 
+	if ((lexer)->c == '>')
+	{
+		lexer_next (lexer);
+		return (1);
+	}
+	return 0;
+ }
 int	istoken(char c)
 {
 	if (c == '>' || c == '<' || c == '|' || c == '\0' || c == ' ')
@@ -63,11 +72,8 @@ t_token	*_switch(t_lexer *lexer)
 	if (lexer->c == '>')
 	{
 		lexer_next(lexer);
-		if (lexer->c == '>')
-		{
-			lexer_next (lexer);
+		if (redirect(lexer))
 			return (init_token(">>", TOKEN_APPEND));
-		}
 		return (init_token(">", TOKEN_REDIRECT));
 	}
 	if (lexer->c == '<')
