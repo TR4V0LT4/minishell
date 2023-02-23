@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   quotes.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wlahyani <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/23 18:40:55 by wlahyani          #+#    #+#             */
+/*   Updated: 2023/02/23 19:16:12 by wlahyani         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "../include/minishell.h"
 
 char	*remove_quotes(char *str, int *heredoc_flag, int prev_type)
@@ -67,13 +78,8 @@ char	*remove_quotes(char *str, int *heredoc_flag, int prev_type)
 	return (string);
 }
 
-int	quotes_checker(char *str)
+int	matching_quotes(char *str, int i)
 {
-	int		i;
-	char	*string;
-
-	i = 0;
-	string = NULL;
 	while (str[i])
 	{
 		if (str[i] == '\"')
@@ -97,6 +103,16 @@ int	quotes_checker(char *str)
 		else
 			i++;
 	}
+	return (0);
+}
+
+int	quotes_checker(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (matching_quotes(str, i))
+		return (1);
 	return (0);
 }
 

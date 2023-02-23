@@ -36,6 +36,7 @@ typedef struct s_parser
 	char	**cmd;
 	int		in_file;
 	int		out_file;
+	char	**env;
 }	t_parser;
 
 typedef struct s_token
@@ -105,6 +106,8 @@ size_t	get_env_size(char **env);
 char	*add_path(char *cmd);
 char	**env_to_tab(t_list *list);
 void	*s_malloc(int size);
+int		check_cmd(char *str);
+void	dup_std_io(t_list *cmds, t_parser *tmp, int *pipe1, int *buffer);
 
       //builtins//
 void	builtins(t_list *list);
@@ -120,8 +123,8 @@ char	*get_new_env(char *s);
 int		check_builtin(t_list *list);
 
       //execut//
-int		start(t_list *list);
-void	execute(t_list *cmds , char **env);
+void		start(t_list *list);
+void	execute(t_list *cmds);
 
       // signlas // 
 void	handler(int sig);

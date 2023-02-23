@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wlahyani <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: wlahyani <wlahyani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 21:19:56 by wlahyani          #+#    #+#             */
-/*   Updated: 2023/02/23 17:10:47 by wlahyani         ###   ########.fr       */
+/*   Updated: 2023/02/23 20:14:10 by wlahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 t_list	*get_env(char **env)

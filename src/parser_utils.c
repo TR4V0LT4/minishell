@@ -6,29 +6,11 @@
 /*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 22:16:54 by wlahyani          #+#    #+#             */
-/*   Updated: 2023/02/23 00:39:24 by skhaliff         ###   ########.fr       */
+/*   Updated: 2023/02/23 18:40:20 by wlahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-void	handler(int sig)
-{
-	(void)sig;
-	write (1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
-
-void	ft_free(char	**t)
-{
-	int	i;
-
-	i = -1;
-	while (t[++i])
-		free (t[i]);
-}
 
 char	*get_var_name(char *str)
 {
@@ -66,6 +48,14 @@ char	*expand(char *result, char *var_name)
 	return (result);
 }
 
+char	*one_cmd(char *str)
+{
+	if (!ft_strdup(str))
+		return ("\0");
+	else
+		return (ft_strdup(str));
+}
+
 char	**realloc_cmd(char **cmd, char *str)
 {
 	char	**tmp;
@@ -73,91 +63,22 @@ char	**realloc_cmd(char **cmd, char *str)
 
 	i = 0;
 	if (!cmd[0])
-	{
-		if (!ft_strdup(str))
-			cmd[0] = "\0";
-		else
-			cmd[0] = ft_strdup(str);
-	}
+		cmd[0] = one_cmd(str);
 	else
 	{
 		while (cmd[i])
 			i++;
 		tmp = (char **)s_malloc(sizeof(char *) * (i + 1));
-		i = 0;
-		while (cmd[i])
-		{	
+		i = -1;
+		while (cmd[++i])
 			tmp[i] = ft_strdup(cmd[i]);
-			i++;
-		}
 		tmp[i] = NULL;
 		cmd = (char **) s_malloc(sizeof(char *) * (i + 2));
-		i = 0;
-		while (tmp[i])
-		{	
+		i = -1;
+		while (tmp[++i])
 			cmd[i] = tmp[i];
-			i++;
-		}
 		cmd[i] = ft_strdup(str);
 		cmd [i + 1] = NULL;
 	}
 	return (cmd);
-}
-
-void	debug_print_token(t_token *token)
-{
-	if (!token)
-		printf("null\n");
-	else
-		printf("value = %s &&  type = %d\n", token->value, token->type);
-}
-
-void	deallocate(t_list *list)
-{
-	t_list	*curr;
-	t_list	*tmp;
-
-	curr = list;
-	while (curr)
-	{
-		free(curr->content);
-		tmp = curr;
-		curr = curr->next;
-		free(tmp);
-	}
-}
-
-void	print_tokens(t_list *list)
-{
-	t_list	*curr;
-
-	curr = list;
-	while (curr)
-	{
-		debug_print_token((t_token *) curr->content);
-		curr = curr->next;
-	}
-}
-
-void	print_cmd(t_list *list)
-{
-	int			i;
-	t_parser	*curr;
-
-	i = 0;
-	curr = (t_parser *)s_malloc(sizeof(t_parser));
-	while (list)
-	{
-		curr = (t_parser *)list->content;
-		i = 0;
-		while (curr->cmd[i])
-		{
-			printf("cmd [%d] = %s\n", i, curr->cmd[i]);
-			i++;
-		}
-		printf("in_file =  %d && out_file = %d\n",
-			curr->in_file, curr->out_file);
-		printf("=======================================================\n");
-		list = list->next;
-	}
 }

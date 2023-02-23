@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+         #
+#    By: wlahyani <wlahyani@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/26 20:23:30 by wlahyani          #+#    #+#              #
-#    Updated: 2023/02/23 00:05:58 by skhaliff         ###   ########.fr        #
+#    Updated: 2023/02/23 20:13:34 by wlahyani         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME = minishell
 
 SRC = src/main.c src/lexer.c src/token.c src/parser.c  src/parser_utils.c src/exe.c \
 	 src/builtins.c src/execution_utils.c src/ft_cd.c src/ft_exit.c src/ft_echo.c \
-	src/ft_export.c src/ft_unset.c src/heredoc.c src/quotes.c src/parser2.c
+	src/ft_export.c src/ft_unset.c src/heredoc.c src/quotes.c src/parser2.c \
+	src/parser_utils2.c src/execution_utils2.c
 
 
 OBJ = ${SRC:%.c=%.o}
