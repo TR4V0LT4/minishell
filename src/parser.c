@@ -6,7 +6,7 @@
 /*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 22:10:00 by wlahyani          #+#    #+#             */
-/*   Updated: 2023/02/22 00:42:38 by wlahyani         ###   ########.fr       */
+/*   Updated: 2023/02/23 14:39:45 by wlahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../include/minishell.h"
@@ -22,98 +22,28 @@ t_parser	*init_content(t_parser *content)
 	return (content);
 }
 
-int lredirection_handler(t_list *tokens , t_parser *tmp)
+t_list	*tokens_iteration(t_list *tokens, t_parser *tmp, int flag)
 {
 	t_token		*curr;
-	
+
 	curr = (t_token *) tokens->content;
-	if (curr->type == TOKEN_LREDIRECT)
-		{
-			tokens = tokens->next;
-			curr = (t_token *) tokens->content;
-			if (curr->type == TOKEN_STRING)
-			{
-				if (access(curr->value, F_OK) == 0)
-					tmp->in_file = open(curr->value, O_RDWR);
-				else
-				{
-					tmp->cmd[0] = "\0";
-					if (tokens->next)
-					{
-						tokens = tokens->next;
-						curr = (t_token *) tokens->content;
-					}
-					return 1;
-				}
-			}
-		}
-	return 0;
-}
-int heredoc_and_append_handler(t_list **tokens,t_parser **tmp, int flag)
-{
-	t_token		*curr;
-	
-	curr = (t_token *) (*tokens)->content;
-		if (curr->type == TOKEN_HEREDOC)
-		{
-			*tokens = (*tokens)->next;
-			curr = (t_token *) (*tokens)->content;
-			if (curr->type == TOKEN_STRING)
-				(*tmp)->in_file = heredoc(curr->value, flag);
-		}
-		else if (curr->type == TOKEN_REDIRECT)
-		{
-			*tokens = (*tokens)->next;
-			curr = (t_token *) (*tokens)->content;
-			if (curr->type == TOKEN_STRING)
-				(*tmp)->out_file = open(curr->value,
-						O_TRUNC | O_CREAT | O_RDWR, 0664);
-		}
-		else
-			return 1;
-	return 0;
-}
-void add_cmd_to_list(t_token *curr, t_list **cmd_list, t_parser **tmp)
-{
-		if (curr->type == TOKEN_PIPE)
-		{
-			ft_lstadd_back(cmd_list, ft_lstnew(*tmp));
-			*tmp = init_content(*tmp);
-		}
-}
-t_token *go_next(t_list **tokens)
-{
-	t_token		*curr;
-	
-	curr = (t_token *) (*tokens)->content;
-	if ((*tokens)->next)
+	if (curr->type == TOKEN_STRING)
+		tmp->cmd = realloc_cmd(tmp->cmd, curr->value);
+	else if (curr->type == TOKEN_APPEND)
 	{
-			*tokens = (*tokens)->next;
-			curr = (t_token *) (*tokens)->content;
+		tokens = tokens->next;
+		curr = (t_token *) tokens->content;
+		if (curr->type == TOKEN_STRING)
+			tmp->out_file = open(curr->value,
+					O_CREAT | O_RDWR | O_APPEND, 0664);
 	}
-	return(curr);
+	else if (!heredoc_and_append_handler(&tokens, &tmp, flag))
+		;
+	else if (lredirection_handler(tokens, tmp))
+		printf("minishell: %s: No such file or directory\n", curr->value);
+	return (tokens);
 }
-t_list *tokens_iteration(t_list *tokens,t_parser *tmp,int flag)
-		{
-			t_token		*curr;
-		
-			curr = (t_token *) tokens->content;
-			if (curr->type == TOKEN_STRING)
-				tmp->cmd = realloc_cmd(tmp->cmd, curr->value);
-			else if (curr->type == TOKEN_APPEND)
-			{
-				tokens = tokens->next;
-				curr = (t_token *) tokens->content;
-				if (curr->type == TOKEN_STRING)
-					tmp->out_file = open(curr->value,
-						O_CREAT | O_RDWR | O_APPEND, 0664);
-			}
-			else if(!heredoc_and_append_handler(&tokens,&tmp, flag))
-				;
-			else if(lredirection_handler(tokens,tmp))
-				printf("minishell: %s: No such file or directory\n", curr->value);
-			return (tokens);
-}
+
 t_list	*fill_command(t_list *tokens)
 {
 	t_list		*cmd_list;
@@ -129,14 +59,15 @@ t_list	*fill_command(t_list *tokens)
 	curr = (t_token *) tokens->content;
 	while (curr->type != TOKEN_EOF)
 	{
-		tokens = tokens_iteration(tokens,tmp,flag);
-		add_cmd_to_list(curr,&cmd_list,&tmp);
+		tokens = tokens_iteration(tokens, tmp, flag);
+		add_cmd_to_list(curr, &cmd_list, &tmp);
 		curr = go_next(&tokens);
 	}
 	ft_lstadd_back(&cmd_list, ft_lstnew(tmp));
 	return (cmd_list);
 }
-int check_next(t_list *tokens)
+
+int	check_next(t_list *tokens)
 {
 	t_token	*curr;
 	t_token	*next;
@@ -144,17 +75,18 @@ int check_next(t_list *tokens)
 	curr = (t_token *) tokens->content;
 	next = (t_token *) tokens->next->content;
 	if (curr->type == TOKEN_PIPE && (next->type == TOKEN_REDIRECT
-				|| next->type == TOKEN_LREDIRECT))
-			curr = (t_token *) tokens->content;
-		else if (curr->type == TOKEN_STRING)
-		{
-			if (quotes_checker(curr->value))
-				return (1);
-		}
-		else if (curr->type != TOKEN_STRING && next->type != TOKEN_STRING)
-			return (2);
-	return(0);
+			|| next->type == TOKEN_LREDIRECT))
+		curr = (t_token *) tokens->content;
+	else if (curr->type == TOKEN_STRING)
+	{
+		if (quotes_checker(curr->value))
+			return (1);
+	}
+	else if (curr->type != TOKEN_STRING && next->type != TOKEN_STRING)
+		return (2);
+	return (0);
 }
+
 int	check_syntax(t_list *tokens)
 {
 	t_token	*curr;
@@ -166,9 +98,9 @@ int	check_syntax(t_list *tokens)
 		return (printf("minishell: syntax error unexpected token `|'\n"));
 	while (curr->type != TOKEN_EOF)
 	{
-		if(check_next(tokens) == 1)
+		if (check_next(tokens) == 1)
 			return (printf("minishell: syntax error unexpected token `\\n'\n"));
-		else if(check_next(tokens) == 2)
+		else if (check_next(tokens) == 2)
 			return (printf("minishell: syntax error unexpected token `%s'\n",
 					next->value));
 		tokens = tokens->next;

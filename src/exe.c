@@ -6,10 +6,9 @@
 /*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:23:41 by wlahyani          #+#    #+#             */
-/*   Updated: 2023/02/23 00:45:56 by skhaliff         ###   ########.fr       */
+/*   Updated: 2023/02/23 16:09:06 by wlahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../include/minishell.h"
 
 void	handler_heredoc(int sig)
@@ -32,9 +31,25 @@ void	rederacting(int input, int output)
 	}
 }
 
+int	check_cmd(char *str)
+{
+	int	i;
+	int	flag;
+
+	i = 0;
+	flag = 0;
+	while (str && str[i])
+	{
+		if (ft_isprint(str[i]))
+			flag = 1;
+		i++;
+	}
+	return (flag);
+}
+
 void	execute(t_list *cmds, char **env)
 {
-	int			pipe1[2] = {-1 , -1};
+	int			pipe1[2] = {-1, -1};
 	int			buffer[2] = {-1, -1};
 	int			pid;
 	int			i;
@@ -76,11 +91,16 @@ void	execute(t_list *cmds, char **env)
 				exit (0);
 			}
 			tmp->cmd[0] = add_path(tmp->cmd[0]);
-			if (execve(tmp->cmd[0], tmp->cmd, env) == -1)
+			if (check_cmd(tmp->cmd[0]))
 			{
-				write(2, "minishell : command not found\n", 30);
-				exit(0);
+				if (execve(tmp->cmd[0], tmp->cmd, env) == -1)
+				{
+					write(2, "minishell : command not found\n", 30);
+					exit(0);
+				}
 			}
+			else
+				exit(1);
 		}
 		unlink("/tmp/minishell");
 		if (tmp->in_file != 0)
@@ -114,9 +134,7 @@ int	start(t_list *list)
 	cmd = (t_parser *) s_malloc(sizeof(t_parser));
 	cmd = (t_parser *)list->content;
 	if (ft_lstsize(list) == 1 && check_builtin(list))
-	{
 		builtins(list);
-	}
 	else
 	{
 		tab_env = env_to_tab(g_data.env);

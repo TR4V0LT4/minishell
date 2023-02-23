@@ -78,9 +78,15 @@ int		istoken(char c);
 t_list	*fill_command(t_list *tokens);
 int		check_syntax(t_list *tokens);
 void	init_parser(t_parser *cmd);
+t_parser	*init_content(t_parser *content);
 int		quotes_checker(char *str);
 char	*remove_quotes(char *str , int *heredoc_flag, int prev_type);
 t_list	*parsing_quotes(t_list *tokens, int *flag);
+int	lredirection_handler(t_list *tokens, t_parser *tmp);
+int	heredoc_and_append_handler(t_list **tokens, t_parser **tmp, int flag);
+void	add_cmd_to_list(t_token *curr, t_list **cmd_list, t_parser **tmp);
+t_token	*go_next(t_list **tokens);
+
 
         //parser_utils.c//
 void	deallocate(t_list *list);

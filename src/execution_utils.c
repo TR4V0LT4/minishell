@@ -85,7 +85,9 @@ char	*add_path(char *cmd)
 
 	i = 0;
 	path = ft_split(get_new_env("PATH"), ':');
-	while (path[i])
+	//printf("[%s]\n" , cmd);
+
+	while (cmd && path[i])
 	{
 		command = ft_strjoin(path[i], "/");
 		command = ft_strjoin(command, cmd);
