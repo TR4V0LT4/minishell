@@ -9,7 +9,7 @@
 /*   Updated: 2023/02/23 00:24:40 by skhaliff         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+#include "../include/minishell.h"
 
 void	heredoc_signals(int sig)
 {

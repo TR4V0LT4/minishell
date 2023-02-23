@@ -20,7 +20,7 @@ OBJ = ${SRC:%.c=%.o}
 
 FLAGS =  -Wall -Wextra -Werror  #-fsanitize=address
 
-READLINE =  -lreadline -L /Users/skhaliff/.brew/Cellar/readline/8.2.1/lib  -I /Users/skhaliff/.brew/Cellar/readline/8.2.1/include 
+READLINE =  -lreadline -L /Users/wlahyani/homebrew/Cellar/readline/8.2.1/lib  -I /Users/wlahyani/homebrew/Cellar/readline/8.2.1/include
 
 %.o:%.c
 	gcc $(FLAGS)  -c $< -o $@

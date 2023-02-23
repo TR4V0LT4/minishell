@@ -118,7 +118,7 @@ int		start(t_list *list);
 void	execute(t_list *cmds , char **env);
 
       // signlas // 
-void	handler(void);
+void	handler(int sig);
 void	rl_replace_line (char *, int);
 
       //heredoc//
