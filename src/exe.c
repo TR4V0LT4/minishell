@@ -6,7 +6,7 @@
 /*   By: wlahyani <wlahyani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:23:41 by wlahyani          #+#    #+#             */
-/*   Updated: 2023/02/23 20:43:38 by wlahyani         ###   ########.fr       */
+/*   Updated: 2023/02/23 21:17:18 by wlahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	execute(t_list *cmds)
 	buffer[1] = -1;
 	tmp = (t_parser *) s_malloc(sizeof(t_parser));
 	execution_loop(cmds, tmp, pipe1, buffer);
+	wait(NULL);
 	while (waitpid(-1, NULL, 0) != -1)
 		;
 }

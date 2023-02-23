@@ -6,7 +6,7 @@
 /*   By: skhaliff <skhaliff@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 13:46:16 by skhaliff          #+#    #+#             */
-/*   Updated: 2023/02/23 00:23:59 by skhaliff         ###   ########.fr       */
+/*   Updated: 2023/02/23 21:02:32 by wlahyani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,7 @@ void	g_home(void)
 			if (chdir(l->value) == -1)
 				printf("ERREUR");
 			else
-			{
 				home = getcwd(NULL, 0);
-				printf(">> %s\n", home);
-			}
 		}
 		a = a->next;
 	}

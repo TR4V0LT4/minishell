@@ -1,24 +1,37 @@
-#ifndef PARSER_H
-#define PARSER_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wlahyani <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/23 21:22:13 by wlahyani          #+#    #+#             */
+/*   Updated: 2023/02/23 21:23:07 by wlahyani         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef MINISHELL_H
+# define MINISHELL_H
+
 # include <signal.h>
-#include "../lib_ft/libft.h"
+# include "../lib_ft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
-#include <sys/wait.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/stat.h>
-#include <string.h>
-#include <limits.h>
-#include <stdbool.h>
-#include <sys/stat.h>
+# include <sys/wait.h>
+# include <fcntl.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <sys/stat.h>
+# include <string.h>
+# include <limits.h>
+# include <stdbool.h>
+# include <sys/stat.h>
 
 typedef struct s_lexer
 {
 	char	*src;
-	int	index;
+	int		index;
 	char	c;
 }	t_lexer;
 
@@ -51,7 +64,7 @@ typedef struct s_token
 		TOKEN_HEREDOC,
 		TOKEN_PIPE,
 		TOKEN_EOF,
-	}type;
+	} type;
 }	t_token;
 
 typedef struct s_env
@@ -61,21 +74,21 @@ typedef struct s_env
 	char	*value;
 }	t_env;
 
-          //lexer//
+//lexer//
 void	init_lexer(t_lexer *lexer ,char *src);
 void	lexer_next(t_lexer * lexer);
 void	skip_spaces(t_lexer *lexer);
 char	*append_to_str(char *str , char c);
 t_list	*lexer(char *src);
 
-          //tokenizer//
+//tokenizer//
 t_token	*init_token(char *value, int type);
 t_token	*_switch(t_lexer *lexer);
 t_token	*get_token(t_lexer *lexer);
 void	debug_print_token(t_token *token);
 int		istoken(char c);
-        
-          //parser//
+
+//parser//
 t_list	*fill_command(t_list *tokens);
 int		check_syntax(t_list *tokens);
 void	init_parser(t_parser *cmd);
@@ -89,7 +102,7 @@ void	add_cmd_to_list(t_token *curr, t_list **cmd_list, t_parser **tmp);
 t_token	*go_next(t_list **tokens);
 
 
-        //parser_utils.c//
+//parser_utils.c//
 void	deallocate(t_list *list);
 void	ft_free(char	**t);
 char	**realloc_cmd(char **cmd, char *str);
@@ -100,7 +113,7 @@ char	*expand(char *result, char *var_name);
 char	*get_var_name(char *str);
 char	*expanding(char *str);
 
-       //execution_utils.c//
+//execution_utils.c//
 t_list	*get_env(char **env);
 size_t	get_env_size(char **env);
 char	*add_path(char *cmd);
@@ -109,7 +122,7 @@ void	*s_malloc(int size);
 int		check_cmd(char *str);
 void	dup_std_io(t_list *cmds, t_parser *tmp, int *pipe1, int *buffer);
 
-      //builtins//
+//builtins//
 void	builtins(t_list *list);
 void	ft_unset(char **var);
 void	ft_env(void);
@@ -122,15 +135,15 @@ int		size_par(char **s);
 char	*get_new_env(char *s);
 int		check_builtin(t_list *list);
 
-      //execut//
+//execut//
 void		start(t_list *list);
 void	execute(t_list *cmds);
 
-      // signlas // 
+// signlas // 
 void	handler(int sig);
 void	rl_replace_line (char *, int);
 
-      //heredoc//
+//heredoc//
 int	heredoc(char *value, int flag);
 
 #endif
